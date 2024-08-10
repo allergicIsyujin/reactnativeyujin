@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-export default function App() {
+const App = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('http://192.168.123.107:3000/api/data')
+      .then(response => response.json())
+      .then(json => setData(json.message))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.text}>{data || "Loading..."}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
   },
 });
+
+export default App;
