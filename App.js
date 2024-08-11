@@ -128,5 +128,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
+//login
 export default App;
