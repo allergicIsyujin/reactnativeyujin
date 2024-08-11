@@ -30,6 +30,10 @@ export default function App() {
               <Text style={styles.allergyName}>계란</Text>
             </View>
           </View>
+          <View style={styles.addAllergy}>
+            <Image source ={require('./assets/img/PlusSquare.png')}></Image>
+            <Text style={styles.addAllergyText}>알러지 추가하기</Text>
+          </View>
         </View>
         <View style={styles.footer}>
           <View style={styles.footerBar}>
@@ -92,18 +96,18 @@ const styles = StyleSheet.create({
   },
   mainImg:{
     marginVertical: 10, // 위아래 여백 10px
-    marginHorizontal: 10, // 좌우 여백 20px
+    marginHorizontal: 20, // 좌우 여백 20px
   },
   mainText:{
     fontSize: 20, // 폰트 크기 20px
     marginTop: 3, // 위쪽 여백 0px
     marginRight: 10, // 오른쪽 여백 10px
-    marginLeft: 10, // 왼쪽 여백 10px
+    marginLeft: 20, // 왼쪽 여백 10px
     fontWeight: '700'
   },
   pText : {
     marginVertical: 5, // 위아래 여백 10px
-    marginHorizontal: 10, // 좌우 여백 10px
+    marginHorizontal: 20, // 좌우 여백 10px
     marginBottom:15,
     fontSize: 14, // 폰트 크기 14px
     color: '#757575', // 텍스트 색상
@@ -114,6 +118,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap', // 자식 요소들을 래핑
     flexDirection: 'row', // 자식 요소들을 수평으로 배치
     height: 220, // 높이 220px
+    marginHorizontal: 20
   },
   allergyName:{
     color:'white'
@@ -128,6 +133,25 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // 자식 요소를 수직으로 배치
     alignItems: 'center', // 자식 요소를 수평으로 중앙 정렬
     justifyContent: 'space-around', // 자식 요소들 사이에 균등한 여백 추가
+  },
+  addAllergy:{
+    position: 'absolute', // 절대 위치 지정
+    alignItems: 'center',
+    bottom: 100, // 화면 하단에서 100px
+    left: 90, // 화면 왼쪽에서 90px
+    flexDirection: 'row', // 자식 요소들을 가로 방향으로 배치
+    justifyContent: 'space-around', // 자식 요소들을 가로 방향으로 균등하게 배치
+    alignItems: 'center', // 자식 요소들을 세로 방향으로 중앙 정렬
+    width: 180, // 너비 130px
+    height: 50, // 높이 50px
+    backgroundColor: '#0D7FFB', // 배경색 파란색
+    borderRadius: 10, // 모서리 둥글게 10px
+    paddingHorizontal: 15, // 좌우 여백 15px
+  },
+  addAllergyText:{
+    fontSize:18,
+    fontWeight:'700',
+    color:'white'
   },
   footer: {
     borderTopRightRadius: 15,
