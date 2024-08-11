@@ -39,7 +39,7 @@ function login(){
   .then(response => response.json())
   .then(json => console.log(json.message))
   .catch(error => console.error('Error fetching data:', error));
-}
+};
 
 const styles = StyleSheet.create({
   body: {
