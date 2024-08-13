@@ -21,6 +21,20 @@ const BeforeMain=({setScreen})=>{
 }
 
 const Login = ({ setScreen }) => {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const handleSubmit=()=>{
+    fetch(`http://192.168.123.107:3000/signup?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+    .then(response => response.json())
+      .then(json => {
+        console.log(json.message);
+        alert(json.message); // 결과를 알림으로 표시
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        alert('Error fetching data');
+      });
+  }
   return (
     <View style={[LoginStyles.container, LoginStyles.loginForm]}>
       <Text style={LoginStyles.title}>로그인</Text>
@@ -28,17 +42,21 @@ const Login = ({ setScreen }) => {
         style={[LoginStyles.inputBox, { top: 250 }]}
         placeholder="아이디를 입력해주세요.."
         name="id"
+        value={id}
+        onChangeText={setId}
       />
       <TextInput
         style={[LoginStyles.inputBox, { top: 320 }]}
         placeholder="비밀번호를 입력해주세요.."
         secureTextEntry={true}// 비밀번호 입력 시 보안을 위해 추가
         name="password" 
+        value={password}
+        onChangeText={setPassword}
       />
       <TouchableOpacity
         style={LoginStyles.button}
         onPress={() => {
-          // 로그인 버튼 클릭 시 동작을 여기에 추가하세요.
+          handleSubmit()
         }}
       >
         <Text style={LoginStyles.buttonText}>로그인</Text>
@@ -115,12 +133,6 @@ const App = () => {
   );
 };
 
-function login(){
-  fetch('http://192.168.123.107:3000/api/data')
-  .then(response => response.json())
-  .then(json => console.log(json.message))
-  .catch(error => console.error('Error fetching data:', error));
-};
 
 const styles = StyleSheet.create({
   body: {
