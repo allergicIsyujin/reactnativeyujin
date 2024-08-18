@@ -45,7 +45,7 @@ const Login = ({ setScreen }) => {
         </TouchableOpacity>
         <View style={LoginStyles.signupContainer}>
           <Text style={LoginStyles.firstTimeText}>처음이신가요?</Text>
-          <Text style={LoginStyles.signupText} onPress={() => setScreen('SignUp')}>회원가입</Text>
+          <Text style={LoginStyles.signupText} onPress={() => setScreen('MainPage')}>회원가입</Text>
         </View>
           <Text style={LoginStyles.backText} onPress={() => setScreen('BeforeMain')}>뒤로가기</Text>
       </View>

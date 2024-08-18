@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react
 import Login from './screens/Login.js';
 import BeforeMain from './screens/BeforeMain.js';
 import SignUp from './screens/SignUp.js'
-
+import MainPage from './screens/MainPage.js'
+import Main from './screens/MainPage.js';
 
 
 const App = () => {
@@ -18,6 +19,8 @@ const App = () => {
         return <Login setScreen={setScreen}/>;
       case 'SignUp':
         return <SignUp setScreen={setScreen}/>;
+      case 'MainPage':
+        return <MainPage setScreen={setScreen}/>
       default:
         return null;
     }
