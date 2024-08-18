@@ -7,7 +7,7 @@ import SignUp from './screens/SignUp.js'
 
 
 const App = () => {
-  const [screen, setScreen] = useState("BeforeMain");
+  const [screen, setScreen] = useState("BeforeMain")
 
 
   const renderScreen = () => {
