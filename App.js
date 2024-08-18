@@ -1,20 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+//스택형식으로 @react-navigation/native, @react-navigation/stack 두개 install해서 진행시킴
+import * as React from 'react';
+import { Text, View, Button, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+import Home from './screens/Home';
+import MyAllergy from './screens/MyAllergy';
+import AddAllergy from './screens/AddAllergy';
+import Record from './screens/Record';
+import Result from './screens/Result';
+import Camera from './screens/Camera';
+import Jnformation from './screens/Jnformation';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+  
+  
+  return ( //기본은 home으로 지정후, 새로생기는 파일마다 이동가능하게 컴포넌트설정.
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home"> 
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyAllergy"
+          component={MyAllergy}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddAllergy"
+          component={AddAllergy}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Record'
+          component={Record}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Result'
+          component={Result}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Camera'
+          component={Camera}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Jnformation'
+          component={Jnformation}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
