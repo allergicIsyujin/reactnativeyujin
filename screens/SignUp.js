@@ -4,6 +4,7 @@ import Action from '../assets/action.svg';
 
 const SignUp = ({ setScreen }) => {
     return (
+      <View styles={signUpStyles.body}>
       <View style={[signUpStyles.container, { marginTop: 200 }]}>
         <View style={signUpStyles.main}>
           <TouchableOpacity style={signUpStyles.backBtn} onPress={() => setScreen('BeforeMain')}>
@@ -37,10 +38,20 @@ const SignUp = ({ setScreen }) => {
           </TouchableOpacity>
         </View>
       </View>
+      </View>
     );
   }
 
   const signUpStyles = StyleSheet.create({
+    body: {
+      margin: 0,
+      padding: 0,
+      width: '100%',
+      height: '85%',
+      justifyContent: 'center',
+      alignItems: 'center',
+       backgroundColor: 'white',
+    },
     container: {
      
       backgroundColor: 'white',

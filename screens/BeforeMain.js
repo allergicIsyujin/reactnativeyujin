@@ -4,7 +4,7 @@ import Action from '../assets/action.svg';
 
 const BeforeMain=({setScreen})=>{
     return (
-     
+     <View style={styles.body}>
         <View style={styles.container}>
           <Action style={{ marginTop: 59 }} />
           
@@ -16,7 +16,7 @@ const BeforeMain=({setScreen})=>{
             <Text style={styles.signupButtonText}>회원가입</Text>
           </TouchableOpacity>
         </View>
-      
+      </View>
     )
   }
 

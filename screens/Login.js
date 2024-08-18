@@ -18,6 +18,7 @@ const Login = ({ setScreen }) => {
         });
     }
     return (
+      <View style={LoginStyles.body}>
       <View style={[LoginStyles.container, LoginStyles.loginForm]}>
         <Text style={LoginStyles.title}>로그인</Text>
         <TextInput
@@ -49,10 +50,20 @@ const Login = ({ setScreen }) => {
         </View>
           <Text style={LoginStyles.backText} onPress={() => setScreen('BeforeMain')}>뒤로가기</Text>
       </View>
+      </View>
     );
   }
 
   const LoginStyles = StyleSheet.create({
+    body: {
+      margin: 0,
+      padding: 0,
+      width: '100%',
+      height: '85%',
+      justifyContent: 'center',
+      alignItems: 'center',
+       backgroundColor: 'white',
+    },
     container: {
       width: 360,
       top:80,
