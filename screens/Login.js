@@ -6,11 +6,12 @@ const Login = ({ setScreen }) => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const handleSubmit=()=>{
-      fetch(`http://192.168.123.107:3000/signup?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+      fetch(`http://10.150.150.105:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
       .then(response => response.json())
         .then(json => {
-          console.log(json.message);
-          alert(json.message); // 결과를 알림으로 표시
+          console.log(json.userId);
+          console.log(json.userPs);
+          alert(json.userId); // 결과를 알림으로 표시
         })
         .catch(error => {
           console.error('Error fetching data:', error);
