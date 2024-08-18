@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
-import Login from '/Users/heodongun/Desktop/myApp/screens/Login.js';
-import BeforeMain from '/Users/heodongun/Desktop/myApp/screens/BeforeMain.js';
-import SignUp from '/Users/heodongun/Desktop/myApp/screens/SignUp.js'
+import Login from './screens/Login.js';
+import BeforeMain from './screens/BeforeMain.js';
+import SignUp from './screens/SignUp.js'
 
 
 

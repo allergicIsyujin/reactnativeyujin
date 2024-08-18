@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
-import Action from '/Users/heodongun/Desktop/myApp/assets/action.svg';
+import Action from '../assets/action.svg';
 
 const Login = ({ setScreen }) => {
     const [id, setId] = useState('');
