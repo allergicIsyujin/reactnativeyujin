@@ -18,6 +18,7 @@ const Stack = createStackNavigator();
 export default function App() {
   
   
+  
   return ( //기본은 home으로 지정후, 새로생기는 파일마다 이동가능하게 컴포넌트설정.
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home"> 
