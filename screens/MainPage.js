@@ -42,10 +42,7 @@ const Main=({setScreen})=> {
     <View style={{flex:1}}>
       <StatusBar style="auto" />
       <LinearGradient style={styles.container} colors={['#51CE54', '#0D7FFB']}>
-      <KeyboardAvoidingView
-          style={{flex:1}}
-          behavior={"padding"}
-      > 
+      
           <ImageBackground style={styles.backgroundImg} source={require('../assets/img/background.png')} resizeMode="cover">
           </ImageBackground>
           <View style={[styles.logo, { height: 62 }]}>
@@ -99,7 +96,13 @@ const Main=({setScreen})=> {
                   </View>
               </View>
           </View>
-          </KeyboardAvoidingView>
+          
+
+
+
+
+
+
           {/* 여기서부터 푸터 */}
           <View style={styles.footer}>
             <View style={styles.footerBar}>
@@ -151,8 +154,7 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 32,
     fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: 'normal',
+    fontWeight: '500',
   },
   main:{
     flex:1.3,
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
     color:'#FFF',
     fontFamily: 'Inter',
     fontSize: 11.4,
-    fontWeight: 400,
+    fontWeight: '400',
   },
   input:{
     marginRight:-8,
