@@ -5,6 +5,43 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function SignUp() {
   const navigation = useNavigation();
+  const [id,setid]=useState('');
+  const [password,setpassword]=useState('');
+  const [repassword,setrepassword]=useState('');
+  const signUp=()=>{
+    fetch(`http://10.150.150.105:3000/signup?userId=${encodeURIComponent(id)}&userPs=${encodeURIComponent(password)}&userRPs=${encodeURIComponent(repassword)}`)
+     .then(response => response.json())
+       .then(json => {
+         if(json.userId){
+           alert('회원가입에 성공하셨습니다.');
+           navigation.navigate('Login')
+         }
+         else{
+            alert(json.message)
+         }
+         // 결과를 알림으로 표시
+         
+       })//navigation.navigate('MainPage')
+       .catch(error => {
+         console.error('Error fetching data:', error);
+         alert('로그인에 실패하셨습니다.');
+       });
+      }
+      const duplication=()=>{
+        fetch(`http://10.150.150.105:3000/duplication?userId=${encodeURIComponent(id)}`)
+         .then(response => response.json())
+           .then(json => {
+             
+                alert(json.message)
+             
+             // 결과를 알림으로 표시
+             
+           })//navigation.navigate('MainPage')
+           .catch(error => {
+             console.error('Error fetching data:', error);
+             alert('서버에러');
+           });
+          }
     return (
       <View styles={signUpStyles.body}>
       <View style={[signUpStyles.container, { marginTop: 200 }]}>
@@ -15,14 +52,18 @@ export default function SignUp() {
           <TextInput 
             style={[signUpStyles.inputBox, signUpStyles.idInput]} 
             placeholder="아이디를 입력해주세요.." 
+            value={id}
+            onChangeText={setid}
           />
           <TextInput 
             style={[signUpStyles.inputBox, signUpStyles.passwordInput]} 
             placeholder="비밀번호를 입력해주세요.." 
+            value={password}
+            onChangeText={setpassword}
             secureTextEntry 
           />
           <Text style={[signUpStyles.label, signUpStyles.idLabel]}>아이디</Text>
-          <TouchableOpacity style={signUpStyles.confirmBtn}>
+          <TouchableOpacity style={signUpStyles.confirmBtn} onPress={()=>duplication()}>
             <Text style={[signUpStyles.checkId,{color: 'white'}]}>확인</Text>
           </TouchableOpacity>
           <Text style={[signUpStyles.label, signUpStyles.passwordLabel]}>비밀번호</Text>
@@ -30,12 +71,14 @@ export default function SignUp() {
           <TextInput 
             style={[signUpStyles.inputBox, signUpStyles.passwordConfirmInput]} 
             placeholder="비밀번호를 입력해주세요.." 
+            value={repassword}
+            onChangeText={setrepassword}
             secureTextEntry 
           />
           <Text style={signUpStyles.title}>회원가입</Text>
             <Text style={signUpStyles.existingText}>이미 회원이신가요?</Text>
             <Text style={signUpStyles.loginText} onPress={() => navigation.navigate('Login')} activeOpacity={0.9}>로그인하기</Text>
-          <TouchableOpacity style={signUpStyles.submitBtn} /*onPress={() => navigation.navigate('')} activeOpacity={0.9}*/>
+          <TouchableOpacity style={signUpStyles.submitBtn} onPress={() => signUp()} activeOpacity={0.9}>
             <Text style={[signUpStyles.complete,{color: 'white'}]} >가입완료</Text>
           </TouchableOpacity>
         </View>

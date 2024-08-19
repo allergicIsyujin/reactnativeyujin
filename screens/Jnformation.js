@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useContext ,useState} from 'react';
+import { UserContext } from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,8 @@ import { useRoute } from '@react-navigation/native';
 
 export default function Jnformation() {
     const navigation = useNavigation();
+    const {userId}=useContext(UserContext)
+  alert(userId)//이거 지우셈
     const route = useRoute();
     const { photoUri } = route.params || {};
     const [foodName, setfoodName] = useState("치킨") //치킨을 임의로 저장해놓음, 찍은 사진의 정보들을 ai가 분석하여 여기에 담아두면됨.

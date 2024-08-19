@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useContext,useState } from 'react';
+import { UserContext } from '../App.js';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ImageBackground, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -9,10 +9,12 @@ import CameraSvg from '../assets/img/Camera.svg';
 import SearchSvg from '../assets/img/find.svg'
 import { useNavigation } from '@react-navigation/native';
 
+
 export default function MainPage() {
   const navigation = useNavigation();
   const [text, setText] = React.useState('');
-  
+  const {userId}=useContext(UserContext)
+  alert(userId)//이거 지우셈
   // 임시의 알러지 값
   foodallerge = '양파';
   async function openai_say(foodname){

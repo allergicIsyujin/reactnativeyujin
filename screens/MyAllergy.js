@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -7,7 +8,8 @@ export default function MyAllergy({ navigation }) {
 
   const route = useRoute(); //useRoute로 등록했던 알러지정보들을 받아옴.
   const { selectedAllergies = [] } = route.params || {}; //selectedAllergies 에 선택한 알러지들을 저장
-
+  const {userId}=useContext(UserContext)
+  alert(userId)//이거 지우셈
   return (
     <View style={styles.container}>
     <LinearGradient colors={['#51CE54', '#0D7FFB']} style={styles.gradient}>

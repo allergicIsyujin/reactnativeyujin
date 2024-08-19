@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState,useContext } from 'react';
+import { UserContext } from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,8 @@ export default function Result() {
   const route = useRoute(); //푸드아이디하고 푸드리스트들을 가져옴
   const data = route.params;
   const foodId = data.foodId;
-  
+  const {userId}=useContext(UserContext)
+  alert(userId)//이거 지우셈
   const foodDetail = data.foodList.find(item => item.id === foodId); //푸드아이디에 해당하는 목록들을 foodDetail에 넣어줌(이름, 성분, 배경)
   console.log(foodDetail.description)
   const navigation = useNavigation();

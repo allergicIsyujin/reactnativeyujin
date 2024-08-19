@@ -1,3 +1,4 @@
+import { UserContext,useContext } from '../App.js';
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Modal, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -5,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function AddAllergy() {
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [allergyList, setAllergyList] = useState([ //기본알러지들의 아이디, 이름, 파란아이콘, 선택됐을때 아이콘(흰색)으로 구성해서 DB에 저장해야함.
     { id: '1', name: '계란', image: require('./assets/addAllergyImg/friedEggs.png'), selectedImage: require('./assets/addAllergyImg/friedEggswhite.png') },
@@ -24,7 +26,8 @@ export default function AddAllergy() {
   const [selectedAllergies, setSelectedAllergies] = useState(new Set()); // 선택된 알러지 항목의 ID를 저장
   const [text, setText] = useState('');
   const navigation = useNavigation();
-
+  const {userId}=useContext(UserContext)
+  alert(userId)//이거 지우셈
 
   const handlePress = (id) => { //선택된 알러지 색깔바꾸기
     setSelectedAllergies(prevSelected => {

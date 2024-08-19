@@ -1,12 +1,13 @@
-import React, { useState, useCallback } from 'react';
-
+import React, { useState, useCallback,useContext } from 'react';
+import { UserContext } from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry, Button } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 export default function Camera() {
     const navigation = useNavigation();
-
+    const {userId}=useContext(UserContext)
+    alert(userId)//이거 지우셈
     const [image, setImage] = useState(null);
     const [error, setError] = useState(null);
 

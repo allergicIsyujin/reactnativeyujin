@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { UserContext } from '../App.js';
+import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
 import { useNavigation } from '@react-navigation/native';

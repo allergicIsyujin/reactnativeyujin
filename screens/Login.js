@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../App.js'; // Context import
+
 
 export default function Login() {
   const navigation = useNavigation();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
+    const { settingId } = useContext(UserContext);
     const handleSubmit=()=>{
-      fetch(`http://10.150.150.105:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+     fetch(`http://10.150.150.105:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
       .then(response => response.json())
         .then(json => {
           console.log(json.userId);
           console.log(json.userPs);
-          alert(json.userId); // 결과를 알림으로 표시
-        })
+          if(json.userId){
+            alert('환영합니다~');
+            settingId(id) // 로그인 성공 시 userId 설정
+            navigation.navigate('MainPage')
+          }
+          else{
+            alert('로그인에 실패하셨습니다.')
+          }
+          // 결과를 알림으로 표시
+          
+        })//navigation.navigate('MainPage')
         .catch(error => {
           console.error('Error fetching data:', error);
-          alert('Error fetching data');
+          alert('로그인에 실패하셨습니다.');
         });
     }
     return (
@@ -41,7 +53,7 @@ export default function Login() {
         />
         <TouchableOpacity
           style={LoginStyles.button}
-          onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}
+          onPress={() =>  handleSubmit()} activeOpacity={0.9}
         >
           <Text style={LoginStyles.buttonText}>로그인</Text>
         </TouchableOpacity>
