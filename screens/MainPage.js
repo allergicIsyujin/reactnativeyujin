@@ -15,17 +15,16 @@ export default function MainPage() {
   const [text, setText] = React.useState('');
   const {userId}=useContext(UserContext)
   alert(userId)//이거 지우셈
-  // 임시의 알러지 값
-  foodallerge = '양파';
+    
   async function openai_say(foodname){
     try{
-      const respond = await fetch('http://172.30.1.42:3000/openAI/say',{
+      const respond = await fetch('http://10.150.151.116:3000/openAI/say',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          allerge: foodallerge,
+          id: userId,
           food: foodname
         })
       })

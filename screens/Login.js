@@ -11,7 +11,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const { settingId } = useContext(UserContext);
     const handleSubmit=()=>{
-     fetch(`http://10.150.150.105:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+     fetch(`http://10.150.151.116:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
       .then(response => response.json())
         .then(json => {
           console.log(json.userId);

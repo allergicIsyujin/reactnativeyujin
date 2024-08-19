@@ -9,7 +9,7 @@ export default function SignUp() {
   const [password,setpassword]=useState('');
   const [repassword,setrepassword]=useState('');
   const signUp=()=>{
-    fetch(`http://10.150.150.105:3000/signup?userId=${encodeURIComponent(id)}&userPs=${encodeURIComponent(password)}&userRPs=${encodeURIComponent(repassword)}`)
+    fetch(`http://10.150.151.116:3000/signup?userId=${encodeURIComponent(id)}&userPs=${encodeURIComponent(password)}&userRPs=${encodeURIComponent(repassword)}`)
      .then(response => response.json())
        .then(json => {
          if(json.userId){
