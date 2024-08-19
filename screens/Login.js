@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
+import { useNavigation } from '@react-navigation/native';
 
-const Login = ({ setScreen }) => {
+export default function Login() {
+  const navigation = useNavigation();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const handleSubmit=()=>{
@@ -39,17 +41,15 @@ const Login = ({ setScreen }) => {
         />
         <TouchableOpacity
           style={LoginStyles.button}
-          onPress={() => {
-            handleSubmit()
-          }}
+          onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}
         >
           <Text style={LoginStyles.buttonText}>로그인</Text>
         </TouchableOpacity>
         <View style={LoginStyles.signupContainer}>
           <Text style={LoginStyles.firstTimeText}>처음이신가요?</Text>
-          <Text style={LoginStyles.signupText} onPress={() => setScreen('MainPage')}>회원가입</Text>
+          <Text style={LoginStyles.signupText} onPress={() => navigation.navigate('SignUp')} activeOpacity={0.9}>회원가입</Text>
         </View>
-          <Text style={LoginStyles.backText} onPress={() => setScreen('BeforeMain')}>뒤로가기</Text>
+          <Text style={LoginStyles.backText} onPress={() => navigation.goBack()} activeOpacity={0.9}>뒤로가기</Text>
       </View>
       </View>
     );
@@ -138,5 +138,3 @@ const Login = ({ setScreen }) => {
       textDecorationLine: 'underline',
     },
   });
-
-  export default Login;

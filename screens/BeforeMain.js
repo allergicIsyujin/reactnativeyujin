@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
+import { useNavigation } from '@react-navigation/native';
 
-const BeforeMain=({setScreen})=>{
+export default function BeforeMain() {
+  const navigation = useNavigation();
     return (
      <View style={styles.body}>
         <View style={styles.container}>
           <Action style={{ marginTop: 59 }} />
           
-          <TouchableOpacity style={styles.loginButton} onPress={() => setScreen('Login')} >
+          <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')} activeOpacity={0.9} >
             <Text style={styles.loginButtonText}>로그인</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.signupButton} onPress={() => setScreen('SignUp')}>
+          <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate('SignUp')} activeOpacity={0.9}>
             <Text style={styles.signupButtonText}>회원가입</Text>
           </TouchableOpacity>
         </View>
@@ -74,5 +76,3 @@ const BeforeMain=({setScreen})=>{
       textAlign: 'center',
     },
   });
-
-  export default BeforeMain;

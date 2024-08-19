@@ -52,7 +52,7 @@ export default function MyAllergy({ navigation }) {
         </View>
       <View style={styles.footer}>
         <View style={styles.footerBar}>
-        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Home')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
             <Image source={require('./assets/myAllergyImg/Home.png')} style={styles.icon} />
             <Text style={styles.footerText}>홈</Text>
             </TouchableOpacity>

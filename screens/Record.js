@@ -71,7 +71,7 @@ const goToResult = ((foodId)=>{
       </View>
     <View style={styles.footer}>
         <View style={styles.footerBar}>
-        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Home')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
             <Image source={require('./assets/recordImg/Home.png')} style={styles.icon} />
             <Text style={styles.footerText}>홈</Text>
             </TouchableOpacity>

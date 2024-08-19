@@ -48,9 +48,9 @@ export default function Result() {
           <Text style={styles.buttonText}>요리 검색하기</Text>
         </TouchableOpacity>
       </View>
-    <View style={styles.footer}>
+      <View style={styles.footer}>
         <View style={styles.footerBar}>
-        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Home')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
             <Image source={require('./assets/recordImg/Home.png')} style={styles.icon} />
             <Text style={styles.footerText}>홈</Text>
             </TouchableOpacity>

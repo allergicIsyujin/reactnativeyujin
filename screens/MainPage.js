@@ -1,14 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import {Image} from 'react-native';
 import LogoSvg from '../assets/img/logo.svg';
 import CameraSvg from '../assets/img/Camera.svg';
 import SearchSvg from '../assets/img/find.svg'
+import { useNavigation } from '@react-navigation/native';
 
-const Main=({setScreen})=> {
+export default function MainPage() {
+  const navigation = useNavigation();
   const [text, setText] = React.useState('');
   
   // 임시의 알러지 값
@@ -38,7 +40,7 @@ const Main=({setScreen})=> {
   }
   
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    
     <View style={{flex:1}}>
       <StatusBar style="auto" />
       <LinearGradient style={styles.container} colors={['#51CE54', '#0D7FFB']}>
@@ -59,7 +61,7 @@ const Main=({setScreen})=> {
               <View style={styles.section}>
                   <TouchableOpacity
                     title="Go to Camera"
-                    //onPress={() => navigation.navigate("Picture")}
+                    onPress={() => navigation.navigate("Camera")}
                   >
                   <View style={styles.But}>
                       <CameraSvg/>
@@ -78,15 +80,22 @@ const Main=({setScreen})=> {
                       >
                         <SearchSvg/>
                       </TouchableOpacity>
-                      <View>{/* class="textBox" */}
-                          <TextInput
-                            style={styles.input}
-                            placeholder="요리명 검색"
-                            onChangeText={text => setText(text)} 
-                            value={text}
-                          />
-                          <View></View>{/* class="searchImg" */}
-                      </View>
+                      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                          <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+                            keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 100} // 필요에 따라 조정
+                          >
+                            <View >
+                                <TextInput
+                                style={styles.input}
+                                placeholder="요리명 검색"
+                                onChangeText={text => setText(text)} 
+                                value={text}
+                              />
+                            </View>
+                          </KeyboardAvoidingView>
+                        </TouchableWithoutFeedback>
+                      
                       <TouchableOpacity
                         // 글자 삭제
                         onPress={()=>{setText('')}}
@@ -100,37 +109,33 @@ const Main=({setScreen})=> {
 
 
 
-
-
-
           {/* 여기서부터 푸터 */}
           <View style={styles.footer}>
-            <View style={styles.footerBar}>
-              <View style={styles.footerCenter}>
-                <Image source={require('../assets/img/Home.png')} style={styles.icon} />
-                <Text style={styles.MFText}>홈</Text>
-              </View>
-              <View style={styles.footerCenter}>
-                <Image source={require('../assets/img/CheckSquare.png')} style={styles.icon} />
-                <Text style={styles.FText}>알러지 등록</Text>
-              </View>
-              <View style={styles.footerCenter}>
-                <Image source={require('../assets/img/Camera.png')} style={styles.icon} />
-                <Text style={styles.FText}>알러지 검색</Text>
-              </View>
-              <View style={styles.footerCenter}>
-                <Image source={require('../assets/img/record.png')} style={styles.icon} />
-                <Text style={styles.FText}>기록</Text>
-              </View>
-            </View>
-          </View>
+        <View style={styles.footerBar}>
+        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
+            <Image source={require('./assets/homeImg/Home.png')} style={styles.icon} />
+            <Text style={styles.selectText}>홈</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
+            <Image source={require('./assets/homeImg/CheckSquare.png')} style={styles.icon} />
+            <Text style={styles.footerText}>알러지 등록</Text>
+            </TouchableOpacity>
+          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
+            <Image source={require('./assets/homeImg/Camera.png')} style={styles.icon} />
+            <Text style={styles.footerText}>알러지 검색</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
+            <Image source={require('./assets/homeImg/record.png')} style={styles.icon} />
+            <Text style={styles.footerText}>기록</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       </LinearGradient>
     </View>
-    </TouchableWithoutFeedback>
+    
   );
 }
 
-export default Main;
 
 const styles = StyleSheet.create({
   container: {
@@ -189,9 +194,11 @@ const styles = StyleSheet.create({
     width: 300,
     flexDirection:'row',
     borderRadius: 5.995,
-    padding: (11.991, 22.482, 11.991, 21.482),
+    paddingLeft:22,
     margin: 10,
+    alignContent:'center',
     alignItems: 'center',
+    
     gap: 18.735,
     backgroundColor: '#0075FF',
   },
@@ -237,21 +244,22 @@ const styles = StyleSheet.create({
   },
   // 여기서 부터 푸터
   footer: {
-    width: '100%',
+    shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자
+    shadowOffset: { width: 0, height: -6 }, // 수평, 수직 오프셋
+    shadowOpacity: 1, // 최대 불투명도
+    shadowRadius: 30, // 그림자 반경
+    elevation: 30, // 안드로이드에서 더 높은 그림자 높이
     position: 'absolute',
     bottom: 0,
+    width: '100%',
     backgroundColor: 'white',
     paddingVertical: 10,
-    borderTopWidth:1,
-    borderTopColor: "rgb( 243, 245, 248)",
-    height: 95,
-    alignItems:'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   footerBar: {
-    width: '95%',
+    width: '98%',
     flexDirection: 'row',
-    marginTop: 5,
-    // backgroundColor: 'red',
     justifyContent: 'space-around',
     height: 50,
   },
@@ -262,16 +270,12 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
-  MFText: {
-    marginTop: 5,
-    color: "#51CE54",
-    textAlign: "center",
-    fontWeight: 'bold',
+  footerText:{
+    color:'#757575',
+    fontWeight:'500'
   },
-  FText: {
-    color: 'rgb( 117, 117, 117)',
-    marginTop: 5,
-    textAlign: "center",
-    fontWeight: 'bold',
+  selectText:{
+    color:'#51CE54',
+    fontWeight:'500'
   }
 });

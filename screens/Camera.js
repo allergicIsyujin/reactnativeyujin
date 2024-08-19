@@ -60,7 +60,7 @@ export default function Camera() {
         
             <View style={styles.footer}>
             <View style={styles.footerBar}>
-            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Home')} activeOpacity={0.9}>
+            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
                 <Image source={require('./assets/cameraImg/Home.png')} style={styles.icon} />
                 <Text style={styles.footerText}>홈</Text>
                 </TouchableOpacity>

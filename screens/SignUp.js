@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
+import { useNavigation } from '@react-navigation/native';
 
-const SignUp = ({ setScreen }) => {
+export default function SignUp() {
+  const navigation = useNavigation();
     return (
       <View styles={signUpStyles.body}>
       <View style={[signUpStyles.container, { marginTop: 200 }]}>
         <View style={signUpStyles.main}>
-          <TouchableOpacity style={signUpStyles.backBtn} onPress={() => setScreen('BeforeMain')}>
+          <TouchableOpacity style={signUpStyles.backBtn} onPress={() => navigation.goBack()} activeOpacity={0.9}>
             <Text style={{textDecorationLine: 'underline'}}>뒤로가기</Text>
           </TouchableOpacity>
           <TextInput 
@@ -32,15 +34,15 @@ const SignUp = ({ setScreen }) => {
           />
           <Text style={signUpStyles.title}>회원가입</Text>
             <Text style={signUpStyles.existingText}>이미 회원이신가요?</Text>
-            <Text style={signUpStyles.loginText} onPress={() => setScreen('Login')}>로그인하기</Text>
-          <TouchableOpacity style={signUpStyles.submitBtn} onPress={() => {/* Handle sign up */}}>
+            <Text style={signUpStyles.loginText} onPress={() => navigation.navigate('Login')} activeOpacity={0.9}>로그인하기</Text>
+          <TouchableOpacity style={signUpStyles.submitBtn} /*onPress={() => navigation.navigate('')} activeOpacity={0.9}*/>
             <Text style={[signUpStyles.complete,{color: 'white'}]} >가입완료</Text>
           </TouchableOpacity>
         </View>
       </View>
       </View>
     );
-  }
+}
 
   const signUpStyles = StyleSheet.create({
     body: {
@@ -196,4 +198,3 @@ const SignUp = ({ setScreen }) => {
       lineHeight: 22,
     },
   });
-  export default SignUp;
