@@ -14,7 +14,7 @@ export default function MainPage() {
   const navigation = useNavigation();
   const [text, setText] = React.useState('');
   const {userId}=useContext(UserContext)
-  alert(userId)//이거 지우셈
+  // alert(userId)//이거 지우셈
     
   async function openai_say(foodname){
     try{
