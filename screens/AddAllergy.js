@@ -13,7 +13,28 @@ import Arrow_back from '../assets/img/arrow_back.svg'
 import CheckSave from '../assets/img/CheckSave.svg'
 
 export default function AddAllergy() {
-
+  const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
+    let postName = []
+    let i=0;
+  const handleSubmit=()=>{
+    fetch(`http://10.150.151.116:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+     .then(response => response.json())
+       .then(json => {
+         bool.forEach((value, index)=>{
+            if (value) {
+              postName[i] = (allergyList[index].name);
+              i++;
+              
+            }
+         })
+         console.log(postName);
+       })
+       .catch(error => {
+         console.error('Error fetching data:', error);
+         alert('로그인에 실패하셨습니다.');
+       });
+   }
   let [bool, setBool] = useState([false, false, false, false, false, false, false, false, false, false, false, false]); 
 
   const OK = (id) => {
@@ -46,7 +67,6 @@ export default function AddAllergy() {
   const [text, setText] = useState('');
   const navigation = useNavigation();
   const {userId}=useContext(UserContext)
-  alert(userId)//이거 지우셈
 
   const handlePress = (id) => { //선택된 알러지 색깔바꾸기
     setSelectedAllergies(prevSelected => {
@@ -64,7 +84,7 @@ export default function AddAllergy() {
   const handleNavigateToMyAllergy = () => {
     // 선택된 알러지 항목만 필터링
     const selectedItems = allergyList.filter(allergy => selectedAllergies.has(allergy.id));
-
+    handleSubmit();
     navigation.navigate('MyAllergy', {
       selectedAllergies: selectedItems // 선택된 알러지 항목만 전달
     });
@@ -90,6 +110,7 @@ export default function AddAllergy() {
         image: require('./assets/addAllergyImg/foodIcon.png'),
         selectedImage: require('./assets/addAllergyImg/foodIconwhite.png'),
       };
+      setBool([...bool, false]);
       setAllergyList([...allergyList, newAllergy]);
       setText('');
       hideModal();

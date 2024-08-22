@@ -18,8 +18,11 @@ export default function MainPage() {
   const navigation = useNavigation();
   const [text, setText] = React.useState('');
   const {userId}=useContext(UserContext)
+  const [inputValue, setInputValue] = useState('');
   // alert(userId)//이거 지우셈
-    
+  const handlePress = () => {
+    navigation.navigate('Search', { inputValue });
+  };
   async function openai_say(foodname){
     try{
       const respond = await fetch('http://10.150.151.116:3000/openAI/say',{
@@ -82,10 +85,7 @@ export default function MainPage() {
                   </TouchableOpacity>
                   <View style={styles.find}>
                       <TouchableOpacity
-                        onPress={async () => {
-                          const result = await openai_say(text); // 비동기 함수의 결과를 기다림
-                          alert(result); // 응답 받은 문자열을 alert로 표시
-                        }}
+                        onPress={handlePress}
                       >
                         <SearchSvg/>
                       </TouchableOpacity>
@@ -98,8 +98,8 @@ export default function MainPage() {
                                 <TextInput
                                 style={styles.input}
                                 placeholder="요리명 검색"
-                                onChangeText={text => setText(text)} 
-                                value={text}
+                                onChangeText={text => setInputValue(text)}
+                                value={inputValue}
                               />
                             </View>
                           </KeyboardAvoidingView>
@@ -107,7 +107,7 @@ export default function MainPage() {
                       
                       <TouchableOpacity
                         // 글자 삭제
-                        onPress={()=>{setText('')}}
+                        onPress={()=>{setInputValue('')}}
                       >
                       <Image source={require('../assets/img/X.png')}/>{/* class="smallImg" id="inputDelete" */}
                       </TouchableOpacity>

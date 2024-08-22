@@ -31,7 +31,7 @@ export default function Camera() {
                 // 사진 촬영
                 let result = await ImagePicker.launchCameraAsync({
                     base64: true,  // Base64 데이터 요청
-                    quality: 1,
+                    quality: 0,
                 });
 
                 if (!result.canceled) {

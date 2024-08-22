@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModul
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 import Home from '../assets/img/Home.svg'
 import CheckSquare from'../assets/img/CheckSquare.svg'
@@ -13,7 +14,16 @@ import SearchSvg from '../assets/img/MiniSearch.svg'
 import MiniCamera from'../assets/img/MiniCamera.svg'
 
 export default function Result() {
-
+  const [id, setId] = useState('');
+    const [password, setPassword] = useState('');
+  useEffect(() => {
+    fetch(`http://10.150.151.116:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      })
+  }, []);
+  
   const route = useRoute(); //푸드아이디하고 푸드리스트들을 가져옴
   const data = route.params;
   const foodId = data.foodId;

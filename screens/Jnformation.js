@@ -46,6 +46,18 @@ export default function Jnformation() {
             alert('로그인에 실패하셨습니다.');
         });
     }, [photoBase64]);
+    const save=()=>{
+        fetch(`http://10.150.151.116:3000/saveImage?userId=${encodeURIComponent(userId)}`)
+         .then(response => response.json())
+           .then(json => {
+                alert('sucess');
+             // 결과를 알림으로 표시
+           })//navigation.navigate('MainPage')
+           .catch(error => {
+             console.error('Error fetching data:', error);
+             alert('로그인에 실패하셨습니다.');
+           });
+       }
     const [descriptions, setDescriptions] = useState([
         { id: 1, name: "닭고기" },
         { id: 2, name: "대두" },
@@ -90,7 +102,7 @@ export default function Jnformation() {
                         <MiniCamera />
                         <Text style={styles.buttonText}>다시 촬영하기</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button2} onPress={goToRecord}>
+                    <TouchableOpacity style={styles.button2} onPress={()=>save()}>
                         <RecordSave />
                         <Text style={styles.buttonText}>기록 저장하기</Text>
                     </TouchableOpacity>
