@@ -4,8 +4,27 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Modal, Tou
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
+import Home from '../assets/img/Home.svg'
+import CheckSquareG from'../assets/img/CheckSquareG.svg'
+import Camera from'../assets/img/Camera.svg'
+import Record from'../assets/img/Record.svg'
+import PlusSquare from'../assets/img/PlusSquare.svg'
+import Arrow_back from '../assets/img/arrow_back.svg'
+import CheckSave from '../assets/img/CheckSave.svg'
 
 export default function AddAllergy() {
+
+  let [bool, setBool] = useState([false, false, false, false, false, false, false, false, false, false, false, false]); 
+
+  const OK = (id) => {
+    setBool((prevBool) => {
+      const updatedBool = [...prevBool];
+      updatedBool[id - 1] = !updatedBool[id - 1];
+      return updatedBool;
+      
+    });
+  };
+
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [allergyList, setAllergyList] = useState([ //기본알러지들의 아이디, 이름, 파란아이콘, 선택됐을때 아이콘(흰색)으로 구성해서 DB에 저장해야함.
@@ -117,7 +136,7 @@ export default function AddAllergy() {
               onPress={() => navigation.goBack()} // 이전 페이지로 이동
               activeOpacity={0.9}
             >
-              <Image source={require('./assets/addAllergyImg/arrow_back.png')} />
+              <Arrow_back/>
             </TouchableOpacity>
             <ScrollView contentContainerStyle={styles.scrollView} style={styles.allergyList}>
               {allergyList.map((allergy) => (
@@ -127,7 +146,10 @@ export default function AddAllergy() {
                     styles.allergyListBox,
                     { backgroundColor: selectedAllergies.has(allergy.id) ? '#0075FF' : '#FFFFFF' }
                   ]}
-                  onPress={() => handlePress(allergy.id)}
+                  onPress={() => {
+                    handlePress(allergy.id);
+                    OK(allergy.id);
+                  }}
                 >
                   <Image source={selectedAllergies.has(allergy.id) ? allergy.selectedImage : allergy.image} />
                   <Text style={[styles.name, {color:selectedAllergies.has(allergy.id) ? "#FFFFFF" : '#0075FF'}]}>{allergy.name}</Text>
@@ -136,34 +158,34 @@ export default function AddAllergy() {
             </ScrollView>
           </View>
           <TouchableOpacity style={styles.newaddAlltergy} onPress={showModal}>
-            <Image source={require('./assets/addAllergyImg/PlusSquare.png')} />
+            <PlusSquare />
             <Text style={styles.newaddAlltergyText}>알러지 추가하기</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleNavigateToMyAllergy} style={styles.save}>
-            <Image source={require('./assets/addAllergyImg/save.png')}></Image>
+            <CheckSave />
             <Text style={styles.newaddAlltergyText}>저장하기</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.footer}>
-          <View style={styles.footerBar}>
-            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
-              <Image source={require('./assets/addAllergyImg/Home.png')} style={styles.icon} />
-              <Text style={styles.footerText}>홈</Text>
+        <View style={styles.footerBar}>
+        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
+            <Home style={styles.icon} />
+            <Text style={styles.footerText}>홈</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
-              <Image source={require('./assets/addAllergyImg/CheckSquare.png')} style={styles.icon} />
-              <Text style={styles.selectText}>알러지 등록</Text>
+            <CheckSquareG style={styles.icon} />
+            <Text style={styles.selectText}>알러지 등록</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-              <Image source={require('./assets/addAllergyImg/Camera.png')} style={styles.icon} />
-              <Text style={styles.footerText}>알러지 검색</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
-              <Image source={require('./assets/addAllergyImg/record.png')} style={styles.icon} />
-              <Text style={styles.footerText}>기록</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
+            <Camera style={styles.icon} />
+            <Text style={styles.footerText}>알러지 검색</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
+            <Record style={styles.icon} />
+            <Text style={styles.footerText}>기록</Text>
+          </TouchableOpacity>
         </View>
+      </View>
       </LinearGradient>
     </View>
   );

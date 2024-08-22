@@ -5,10 +5,14 @@ import { StyleSheet, Text, View, ImageBackground, TextInput, Platform,  Touchabl
 import { LinearGradient } from 'expo-linear-gradient'
 import {Image} from 'react-native';
 import LogoSvg from '../assets/img/logo.svg';
-import CameraSvg from '../assets/img/Camera.svg';
+import ReTake from '../assets/img/Retake.svg';
 import SearchSvg from '../assets/img/find.svg'
 import { useNavigation } from '@react-navigation/native';
 
+import HomeG from '../assets/img/HomeG.svg'
+import CheckSquare from'../assets/img/CheckSquare.svg'
+import Camera from'../assets/img/Camera.svg'
+import Record from'../assets/img/Record.svg'
 
 export default function MainPage() {
   const navigation = useNavigation();
@@ -48,6 +52,7 @@ export default function MainPage() {
       
           <ImageBackground style={styles.backgroundImg} source={require('../assets/img/background.png')} resizeMode="cover">
           </ImageBackground>
+          <View style={styles.unMainBox}></View>
           <View style={[styles.logo, { height: 62 }]}>
             <LogoSvg height={62}></LogoSvg>
             <Text style={styles.logoText}>Allergic</Text>
@@ -59,18 +64,21 @@ export default function MainPage() {
                   <Text style={styles.mainText}>알러지 식품을 체크해보세요!</Text>{/* class="text" */}
                   <Text style={styles.mainSmallText}>사진촬영이나 요리명을 검색해보세요.</Text>{/* class="small-text" */}
               </View>
+              <View style={styles.unBox}></View>
               <View style={styles.section}>
                   <TouchableOpacity
                     title="Go to Camera"
                     onPress={() => navigation.navigate("Camera")}
                   >
+                    
                   <View style={styles.But}>
-                      <CameraSvg/>
+                      <ReTake/>
                       <View style={styles.textBox}>{/* class="textBox" */}
                           <Text style={styles.Cam_text}>사진촬영</Text>{/* class="text" */}
                           <Text style={styles.Cam_smallText}>완성된 요리를 촬영해주세요</Text>{/* class="small-text" */}
                       </View>
                   </View>
+                  
                   </TouchableOpacity>
                   <View style={styles.find}>
                       <TouchableOpacity
@@ -114,19 +122,19 @@ export default function MainPage() {
           <View style={styles.footer}>
         <View style={styles.footerBar}>
         <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
-            <Image source={require('./assets/homeImg/Home.png')} style={styles.icon} />
+            <HomeG style={styles.icon} />
             <Text style={styles.selectText}>홈</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
-            <Image source={require('./assets/homeImg/CheckSquare.png')} style={styles.icon} />
+            <CheckSquare style={styles.icon} />
             <Text style={styles.footerText}>알러지 등록</Text>
             </TouchableOpacity>
           <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-            <Image source={require('./assets/homeImg/Camera.png')} style={styles.icon} />
+            <Camera style={styles.icon} />
             <Text style={styles.footerText}>알러지 검색</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
-            <Image source={require('./assets/homeImg/record.png')} style={styles.icon} />
+            <Record style={styles.icon} />
             <Text style={styles.footerText}>기록</Text>
           </TouchableOpacity>
         </View>
@@ -147,11 +155,18 @@ const styles = StyleSheet.create({
     flex:1,
     marginTop:30,
   },
+  unMainBox:{
+    width:'100%',
+    height:400,
+  },
+  unBox:{
+    height:30
+  },
   logo: {
-    position: 'relative',
+    position:'absolute',
     flexDirection:'row',
     left: 20,
-    top:-30,
+    top:300,
   },
   logoText:{
     position: 'relative',
@@ -164,9 +179,11 @@ const styles = StyleSheet.create({
   },
   main:{
     flex:1.3,
-    top:-30,
+    bottom:70,
+    width:'100%',
+    height:350,
     backgroundColor: "#FFF",
-    position: 'relative',
+    position:'absolute',
     borderTopRightRadius: 100,
   },
   mainText:{
@@ -255,8 +272,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     paddingVertical: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
   footerBar: {
     width: '98%',

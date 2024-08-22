@@ -5,6 +5,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 
+import Home from '../assets/img/Home.svg'
+import CheckSquare from'../assets/img/CheckSquare.svg'
+import Camera from'../assets/img/Camera.svg'
+import RecordG from'../assets/img/RecordG.svg'
+import SearchSvg from '../assets/img/MiniSearch.svg'
+import MiniCamera from'../assets/img/MiniCamera.svg'
 
 export default function Result() {
 
@@ -41,30 +47,30 @@ export default function Result() {
             </View>
         </View>
         <TouchableOpacity style={styles.button1} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-          <Image source={require('./assets/cameraImg/reTake.png')} ></Image>
+          <MiniCamera />
           <Text style={styles.buttonText}>요리 촬영하기</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2}>
-          <Image source={require('./assets/cameraImg/search.png')}></Image>
+          <SearchSvg />
           <Text style={styles.buttonText}>요리 검색하기</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>
         <View style={styles.footerBar}>
         <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/Home.png')} style={styles.icon} />
+            <Home style={styles.icon} />
             <Text style={styles.footerText}>홈</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/CheckSquare.png')} style={styles.icon} />
+            <CheckSquare style={styles.icon} />
             <Text style={styles.footerText}>알러지 등록</Text>
             </TouchableOpacity>
           <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/Camera.png')} style={styles.icon} />
+            <Camera style={styles.icon} />
             <Text style={styles.footerText}>알러지 검색</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/record.png')} style={styles.icon} />
+            <RecordG style={styles.icon} />
             <Text style={styles.selectText}>기록</Text>
           </TouchableOpacity>
         </View>
@@ -144,8 +150,6 @@ const styles = StyleSheet.create({
     bottom:110,
     width:150,
     padding:10,
-    paddingTop:11,
-    paddingBottom:12,
     alignItems:'center',
     backgroundColor:'#0075FF',
     justifyContent:'space-around',

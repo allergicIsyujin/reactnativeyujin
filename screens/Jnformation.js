@@ -4,6 +4,13 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+import Home from '../assets/img/Home.svg'
+import CheckSquare from'../assets/img/CheckSquare.svg'
+import CameraG from'../assets/img/CameraG.svg'
+import Record from'../assets/img/Record.svg'
+import MiniCamera from'../assets/img/MiniCamera.svg'
+import RecordSave from '../assets/img/RecordSave.svg'
+
 export default function Jnformation() {
     const navigation = useNavigation();
     const { userId } = useContext(UserContext);
@@ -80,34 +87,34 @@ export default function Jnformation() {
                         onPress={() => navigation.goBack()}
                         activeOpacity={0.9}
                     >
-                        <Image source={require('./assets/cameraImg/reTake.png')} />
+                        <MiniCamera />
                         <Text style={styles.buttonText}>다시 촬영하기</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button2} onPress={goToRecord}>
-                        <Image source={require('./assets/cameraImg/saveImg.png')} />
+                        <RecordSave />
                         <Text style={styles.buttonText}>기록 저장하기</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footer}>
-                    <View style={styles.footerBar}>
-                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
-                            <Image source={require('./assets/cameraImg/Home.png')} style={styles.icon} />
-                            <Text style={styles.footerText}>홈</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
-                            <Image source={require('./assets/cameraImg/CheckSquare.png')} style={styles.icon} />
-                            <Text style={styles.footerText}>알러지 등록</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-                            <Image source={require('./assets/cameraImg/Camera.png')} style={styles.icon} />
-                            <Text style={styles.selectText}>알러지 검색</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
-                            <Image source={require('./assets/cameraImg/record.png')} style={styles.icon} />
-                            <Text style={styles.footerText}>기록</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+        <View style={styles.footerBar}>
+        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
+            <Home style={styles.icon} />
+            <Text style={styles.footerText}>홈</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
+            <CheckSquare style={styles.icon} />
+            <Text style={styles.footerText}>알러지 등록</Text>
+            </TouchableOpacity>
+          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
+            <CameraG style={styles.icon} />
+            <Text style={styles.selectText}>알러지 검색</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
+            <Record style={styles.icon} />
+            <Text style={styles.footerText}>기록</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
             </LinearGradient>
         </View>
     );

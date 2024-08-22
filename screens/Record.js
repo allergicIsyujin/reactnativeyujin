@@ -5,6 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 
+import Home from '../assets/img/Home.svg'
+import CheckSquare from'../assets/img/CheckSquare.svg'
+import Camera from'../assets/img/Camera.svg'
+import RecordG from'../assets/img/RecordG.svg'
+import Arrow_back from '../assets/img/arrow_back.svg'
 
 export default function Record() {
   const navigation = useNavigation();
@@ -49,7 +54,7 @@ const goToResult = ((foodId)=>{
           onPress={() => navigation.goBack()} // 이전 페이지로 이동
           activeOpacity={0.9}
           >
-            <Image source={require('./assets/addAllergyImg/arrow_back.png')} />
+            <Arrow_back />
           </TouchableOpacity>
           <ScrollView contentContainerStyle={styles.scrollView} style={styles.RecordList}>
               {foodList && foodList.length > 0 ? foodList.map((food) => ( //추후foodList가 아닌 DB에 있는것들을 가져와서 할 예정
@@ -70,22 +75,22 @@ const goToResult = ((foodId)=>{
           </ScrollView>
         </View>
       </View>
-    <View style={styles.footer}>
+      <View style={styles.footer}>
         <View style={styles.footerBar}>
         <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/Home.png')} style={styles.icon} />
+            <Home style={styles.icon} />
             <Text style={styles.footerText}>홈</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/CheckSquare.png')} style={styles.icon} />
+            <CheckSquare style={styles.icon} />
             <Text style={styles.footerText}>알러지 등록</Text>
             </TouchableOpacity>
           <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/Camera.png')} style={styles.icon} />
+            <Camera style={styles.icon} />
             <Text style={styles.footerText}>알러지 검색</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
-            <Image source={require('./assets/recordImg/record.png')} style={styles.icon} />
+            <RecordG style={styles.icon} />
             <Text style={styles.selectText}>기록</Text>
           </TouchableOpacity>
         </View>
