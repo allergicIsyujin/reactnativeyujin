@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,12 +11,59 @@ import Record from'../assets/img/Record.svg'
 import PlusSquare from'../assets/img/PlusSquare.svg'
 import Arrow_back from '../assets/img/arrow_back.svg'
 import LogoSvg from '../assets/img/logo.svg';
-export default function MyAllergy({ navigation }) {
 
+
+export default function MyAllergy({ navigation }) {
   const route = useRoute(); //useRoute로 등록했던 알러지정보들을 받아옴.
-  const { selectedAllergies = [] } = route.params || {}; //selectedAllergies 에 선택한 알러지들을 저장
-  const {userId}=useContext(UserContext)
-  alert(userId)//이거 지우셈
+  const [selectedAllergies, setSelectedAllergies] = useState([]);
+  const { userId } = useContext(UserContext);
+  // const { selectedAllergies = [] } = route.params || {}; //selectedAllergies 에 선택한 알러지들을 저장
+  const images = [ //기본알러지들의 아이디, 이름, 파란아이콘, 선택됐을때 아이콘(흰색)으로 구성해서 DB에 저장해야함.
+    { name: '계란', image: require('./assets/addAllergyImg/friedEggswhite.png') },
+    { name: '밀가루', image: require('./assets/addAllergyImg/loafBreadwhite.png') },
+    { name: '우유', image: require('./assets/addAllergyImg/jarwhite.png') },
+    { name: '닭고기', image: require('./assets/addAllergyImg/meat3white.png') },
+    { name: '돼지고기', image: require('./assets/addAllergyImg/meat2white.png') },
+    { name: '견과류', image: require('./assets/addAllergyImg/nutswhite.png') },
+    { name: '새우', image: require('./assets/addAllergyImg/shrimpwhite.png') },
+    { name: '해산물', image: require('./assets/addAllergyImg/fish1white.png') },
+    { name: '생선', image: require('./assets/addAllergyImg/fishwhite.png') },
+    { name: '포도', image: require('./assets/addAllergyImg/grapewhite.png') },
+    { name: '바나나', image: require('./assets/addAllergyImg/bananawhite.png') },
+    { name: '사과', image: require('./assets/addAllergyImg/applewhite.png') },
+  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const respond = await fetch('http://10.150.151.116:3000/myAllergy', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+          }),
+        });
+
+        const result = await respond.json();
+        const allergies = result.map((value, index) => {
+          const allergyImage = images.find(i => i.name === value)?.image || null;
+          return {
+            id: index,
+            selectedImage: allergyImage,
+            name: value,
+          };
+        });
+
+        setSelectedAllergies(allergies);
+      } catch (error) {
+        console.error(error);
+        alert('알러지 수정에 실패하였습니다.');
+      }
+    };
+
+    fetchData();
+  });
   return (
     <View style={styles.container}>
     <LinearGradient colors={['#51CE54', '#0D7FFB']} style={styles.gradient}>
@@ -224,4 +271,3 @@ const styles = StyleSheet.create({
     fontWeight:'500'
   }
 });
-

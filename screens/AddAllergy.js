@@ -1,5 +1,5 @@
 import { UserContext} from '../App.js';
-import React, { useState ,useContext} from 'react';
+import React, { useState ,useContext, useEffect} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Modal, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -14,26 +14,87 @@ import CheckSave from '../assets/img/CheckSave.svg'
 
 export default function AddAllergy() {
   const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-    let postName = []
-    let i=0;
-  const handleSubmit=()=>{
-    fetch(`http://10.150.151.116:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
-     .then(response => response.json())
-       .then(json => {
-         bool.forEach((value, index)=>{
-            if (value) {
-              postName[i] = (allergyList[index].name);
-              i++;
-              
+  const [password, setPassword] = useState('');
+  const {userId}=useContext(UserContext)
+  let postName = []
+  let i=0;
+  const [selectedAllergies, setSelectedAllergies] = useState(new Set());
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const respond = await fetch('http://10.150.151.116:3000/myAllergy', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+          }),
+        });
+
+        const result = await respond.json();
+        
+        setSelectedAllergies(prevSelected => {
+          const newSelected = new Set(prevSelected);
+          let i=0
+          result.forEach(allergy => {
+            const foundAllergy = allergyList.find(item => item.name === allergy);
+            if (foundAllergy) {
+              newSelected.add(foundAllergy.id);
             }
-         })
-         console.log(postName);
-       })
-       .catch(error => {
-         console.error('Error fetching data:', error);
-         alert('로그인에 실패하셨습니다.');
-       });
+          });
+          
+          return newSelected;
+        });
+        
+      } catch (error) {
+        console.error(error);
+        alert('알러지 수정에 실패하였습니다.');
+      }
+    };
+
+    fetchData();
+  }, []);
+  const handlePress = (id) => { //선택된 알러지 색깔바꾸기
+    setSelectedAllergies(prevSelected => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(id)) {
+        newSelected.delete(id); // 이미 선택된 항목을 클릭하면 선택 해제
+      } else {
+        newSelected.add(id); // 선택되지 않은 항목을 클릭하면 선택됨
+      }
+      return newSelected;
+    });
+  };
+
+  const handleSubmit=async()=>{
+  try{
+      bool.forEach((value, index)=>{
+        if (value) {
+          postName[i] = (allergyList[index].name);
+          i++;
+        }
+      });
+      const respond = await fetch('http://10.150.151.116:3000/save/allergy',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: userId,
+          food: postName
+        })
+      })
+      const textResponse = await respond.text(); // 응답 본문을 문자열로 읽기
+      console.log(textResponse); // 응답된 텍스트 출력
+
+      alert(textResponse);
+    } catch (error) {
+      console.error(error);
+      alert('알러지 수정에 실패하였습니다.');
+    }
+
    }
   let [bool, setBool] = useState([false, false, false, false, false, false, false, false, false, false, false, false]); 
 
@@ -51,7 +112,7 @@ export default function AddAllergy() {
   const [allergyList, setAllergyList] = useState([ //기본알러지들의 아이디, 이름, 파란아이콘, 선택됐을때 아이콘(흰색)으로 구성해서 DB에 저장해야함.
     { id: '1', name: '계란', image: require('./assets/addAllergyImg/friedEggs.png'), selectedImage: require('./assets/addAllergyImg/friedEggswhite.png') },
     { id: '2', name: '밀가루', image: require('./assets/addAllergyImg/loafBread.png'), selectedImage: require('./assets/addAllergyImg/loafBreadwhite.png') },
-    { id: '3', name: '우유', image: require('./assets/addAllergyImg/jar.png'), selectedImage: require('./assets/addAllergyImg/jarwhite.png') },
+    { id: '3', name: "우유", image: require('./assets/addAllergyImg/jar.png'), selectedImage: require('./assets/addAllergyImg/jarwhite.png') },
     { id: '4', name: '닭고기', image: require('./assets/addAllergyImg/meat3.png'), selectedImage: require('./assets/addAllergyImg/meat3white.png') },
     { id: '5', name: '돼지고기', image: require('./assets/addAllergyImg/meat2.png'), selectedImage: require('./assets/addAllergyImg/meat2white.png') },
     { id: '6', name: '견과류', image: require('./assets/addAllergyImg/nuts.png'), selectedImage: require('./assets/addAllergyImg/nutswhite.png') },
@@ -63,22 +124,10 @@ export default function AddAllergy() {
     { id: '12', name: '사과', image: require('./assets/addAllergyImg/apple.png'), selectedImage: require('./assets/addAllergyImg/applewhite.png') },
   ]);
 
-  const [selectedAllergies, setSelectedAllergies] = useState(new Set()); // 선택된 알러지 항목의 ID를 저장
+  
   const [text, setText] = useState('');
   const navigation = useNavigation();
-  const {userId}=useContext(UserContext)
-
-  const handlePress = (id) => { //선택된 알러지 색깔바꾸기
-    setSelectedAllergies(prevSelected => {
-      const newSelected = new Set(prevSelected);
-      if (newSelected.has(id)) {
-        newSelected.delete(id); // 이미 선택된 항목을 클릭하면 선택 해제
-      } else {
-        newSelected.add(id); // 선택되지 않은 항목을 클릭하면 선택됨
-      }
-      return newSelected;
-    });
-  };
+  
 
   //저장하기를 눌렀을때 정보를 전달하기
   const handleNavigateToMyAllergy = () => {
