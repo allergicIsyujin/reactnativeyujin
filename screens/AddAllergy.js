@@ -1,4 +1,5 @@
 import { UserContext} from '../App.js';
+import {IPContext} from '../App.js';
 import React, { useState ,useContext, useEffect} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Modal, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,14 +17,27 @@ export default function AddAllergy() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const {userId}=useContext(UserContext)
+  const {IP} = useContext(IPContext);
   let postName = []
   let i=0;
   const [selectedAllergies, setSelectedAllergies] = useState(new Set());
   useEffect(() => {
+
+    const findNew = async () => {
+      try {
+        const respond = await fetch(`http://${IP}/newAllergy?userId=${userId}`);
+
+        console.log(respond);
+        
+      } catch (error) {
+        console.error(error);
+        alert('알러지 수정에 실패하였습니다.');
+      }
+    }
     
     const fetchData = async () => {
       try {
-        const respond = await fetch('http://10.150.151.116:3000/myAllergy', {
+        const respond = await fetch(`http://${IP}/myAllergy`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -55,6 +69,7 @@ export default function AddAllergy() {
     };
 
     fetchData();
+    findNew();
   }, []);
   const handlePress = (id) => { //선택된 알러지 색깔바꾸기
     setSelectedAllergies(prevSelected => {
@@ -76,7 +91,7 @@ export default function AddAllergy() {
           i++;
         }
       });
-      const respond = await fetch('http://10.150.151.116:3000/save/allergy',{
+      const respond = await fetch(`http://${IP}/save/allergy`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

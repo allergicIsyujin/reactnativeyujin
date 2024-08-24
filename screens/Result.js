@@ -1,5 +1,6 @@
 import React, { useState,useContext } from 'react';
 import { UserContext } from '../App.js';
+import {IPContext} from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -17,7 +18,7 @@ export default function Result() {
   const [id, setId] = useState('');
     const [password, setPassword] = useState('');
   useEffect(() => {
-    fetch(`http://10.150.151.116:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+    fetch(`http://${IP}/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
       .then(response => response.json())
       .then(json => {
         console.log(json);
@@ -28,6 +29,7 @@ export default function Result() {
   const data = route.params;
   const foodId = data.foodId;
   const {userId}=useContext(UserContext)
+  const {IP} = useContext(IPContext);
   alert(userId)//이거 지우셈
   const foodDetail = data.foodList.find(item => item.id === foodId); //푸드아이디에 해당하는 목록들을 foodDetail에 넣어줌(이름, 성분, 배경)
   console.log(foodDetail.description)

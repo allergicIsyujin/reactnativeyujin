@@ -1,5 +1,6 @@
 import React, { useContext, useState,useEffect } from 'react';
 import { UserContext } from '../App.js';
+import {IPContext} from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -14,13 +15,14 @@ import RecordSave from '../assets/img/RecordSave.svg'
 export default function Jnformation() {
     const navigation = useNavigation();
     const { userId } = useContext(UserContext);
+    const {IP} = useContext(IPContext);
     const route = useRoute();
     const { photoBase64 } = route.params || {}; // Base64 이미지 데이터 수신
     const [foodName, setfoodName] = useState("치킨"); // 임시로 설정된 음식 이름
     const [backgroundColor, setbackgroundColor] = useState(1); // 배경색: 1은 먹을 수 있음, 0은 먹을 수 없음
     useEffect(() => {
         // 데이터 전송
-        fetch('http://10.150.151.116:3000/base64', {
+        fetch(`http://${IP}/base64`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -47,7 +49,7 @@ export default function Jnformation() {
         });
     }, [photoBase64]);
     const save=()=>{
-        fetch(`http://10.150.151.116:3000/saveImage?userId=${encodeURIComponent(userId)}`)
+        fetch(`http://${IP}/saveImage?userId=${encodeURIComponent(userId)}`)
          .then(response => response.json())
            .then(json => {
                 alert('sucess');

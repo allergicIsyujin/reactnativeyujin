@@ -1,4 +1,5 @@
 import { UserContext } from '../App.js';
+import {IPContext} from '../App.js';
 import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
@@ -6,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function BeforeMain() {
   const navigation = useNavigation();
+  const {IP} = useContext(IPContext);
     return (
      <View style={styles.body}>
         <View style={styles.container}>

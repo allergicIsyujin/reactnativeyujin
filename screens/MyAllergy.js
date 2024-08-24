@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../App.js';
+import {IPContext} from '../App.js';
+
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute } from '@react-navigation/native';
@@ -17,6 +19,7 @@ export default function MyAllergy({ navigation }) {
   const route = useRoute(); //useRoute로 등록했던 알러지정보들을 받아옴.
   const [selectedAllergies, setSelectedAllergies] = useState([]);
   const { userId } = useContext(UserContext);
+  const {IP} = useContext(IPContext);
   // const { selectedAllergies = [] } = route.params || {}; //selectedAllergies 에 선택한 알러지들을 저장
   const images = [ //기본알러지들의 아이디, 이름, 파란아이콘, 선택됐을때 아이콘(흰색)으로 구성해서 DB에 저장해야함.
     { name: '계란', image: require('./assets/addAllergyImg/friedEggswhite.png') },
@@ -35,7 +38,7 @@ export default function MyAllergy({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respond = await fetch('http://10.150.151.116:3000/myAllergy', {
+        const respond = await fetch(`http://${IP}/myAllergy`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -47,7 +50,7 @@ export default function MyAllergy({ navigation }) {
 
         const result = await respond.json();
         const allergies = result.map((value, index) => {
-          const allergyImage = images.find(i => i.name === value)?.image || null;
+          const allergyImage = images.find(i => i.name === value)?.image || require('./assets/addAllergyImg/foodIconwhite.png');
           return {
             id: index,
             selectedImage: allergyImage,

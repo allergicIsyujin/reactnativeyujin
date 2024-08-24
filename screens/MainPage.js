@@ -1,5 +1,7 @@
 import React, { useContext,useState } from 'react';
 import { UserContext } from '../App.js';
+import {IPContext} from '../App.js';
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ImageBackground, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
@@ -18,6 +20,7 @@ export default function MainPage() {
   const navigation = useNavigation();
   const [text, setText] = React.useState('');
   const {userId}=useContext(UserContext)
+  const {IP} = useContext(IPContext);
   const [inputValue, setInputValue] = useState('');
   // alert(userId)//이거 지우셈
   const handlePress = () => {
@@ -25,7 +28,7 @@ export default function MainPage() {
   };
   async function openai_say(foodname){
     try{
-      const respond = await fetch('http://10.150.151.116:3000/openAI/say',{
+      const respond = await fetch(`http://${IP}/openAI/say`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

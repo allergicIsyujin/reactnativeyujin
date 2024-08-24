@@ -1,5 +1,7 @@
 import React, { useState, useEffect,useContext } from 'react';
 import { UserContext } from '../App.js';
+import {IPContext} from '../App.js';
+
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +18,7 @@ export default function Record() {
   const route = useRoute();
   const { data } = route.params || {};
   const {userId}=useContext(UserContext)
+  const {IP} = useContext(IPContext);
   alert(userId)//이거 지우셈
   
   const [foodList, setfoodList] = useState([]);

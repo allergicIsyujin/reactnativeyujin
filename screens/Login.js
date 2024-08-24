@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react
 import Action from '../assets/action.svg';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../App.js'; // Context import
+import {IPContext} from '../App.js';
 
 
 export default function Login() {
@@ -10,8 +11,9 @@ export default function Login() {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const { settingId } = useContext(UserContext);
+    const {IP} = useContext(IPContext);
     const handleSubmit=()=>{
-     fetch(`http://10.150.151.116:3000/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
+     fetch(`http://${IP}/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
       .then(response => response.json())
         .then(json => {
           console.log(json.userId);
