@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
+import {IPContext} from '../App.js';
 import { useNavigation } from '@react-navigation/native';
 
 export default function SignUp() {
   const navigation = useNavigation();
   const [id,setid]=useState('');
+  const {IP} = useContext(IPContext);
   const [password,setpassword]=useState('');
   const [repassword,setrepassword]=useState('');
   const signUp=()=>{
-    fetch(`http://10.150.151.116:3000/signup?userId=${encodeURIComponent(id)}&userPs=${encodeURIComponent(password)}&userRPs=${encodeURIComponent(repassword)}`)
+    fetch(`http://${IP}/signup?userId=${encodeURIComponent(id)}&userPs=${encodeURIComponent(password)}&userRPs=${encodeURIComponent(repassword)}`)
      .then(response => response.json())
        .then(json => {
          if(json.userId){
@@ -28,7 +30,7 @@ export default function SignUp() {
        });
       }
       const duplication=()=>{
-        fetch(`http://10.150.150.105:3000/duplication?userId=${encodeURIComponent(id)}`)
+        fetch(`http://${IP}/duplication?userId=${encodeURIComponent(id)}`)
          .then(response => response.json())
            .then(json => {
              

@@ -88,7 +88,10 @@ export default function MainPage() {
                   </TouchableOpacity>
                   <View style={styles.find}>
                       <TouchableOpacity
-                        onPress={handlePress}
+                        onPress={async() => {
+                          result = await openai_say(text);
+                          alert(result);
+                        }}
                       >
                         <SearchSvg/>
                       </TouchableOpacity>
@@ -101,8 +104,8 @@ export default function MainPage() {
                                 <TextInput
                                 style={styles.input}
                                 placeholder="요리명 검색"
-                                onChangeText={text => setInputValue(text)}
-                                value={inputValue}
+                                onChangeText={setText}
+                                value={text}
                               />
                             </View>
                           </KeyboardAvoidingView>
@@ -110,7 +113,7 @@ export default function MainPage() {
                       
                       <TouchableOpacity
                         // 글자 삭제
-                        onPress={()=>{setInputValue('')}}
+                        onPress={()=>{setText('')}}
                       >
                       <Image source={require('../assets/img/X.png')}/>{/* class="smallImg" id="inputDelete" */}
                       </TouchableOpacity>
