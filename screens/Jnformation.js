@@ -22,7 +22,7 @@ export default function Jnformation() {
     const [backgroundColor, setbackgroundColor] = useState(1); // 배경색: 1은 먹을 수 있음, 0은 먹을 수 없음
     useEffect(() => {
         // 데이터 전송
-        fetch(`http://${IP}/base64`, {
+        fetch('http://172.30.1.42:3000/base64', {//{"ok": "O", "foodName": "짜장면", "ingredients": ["면", "춘장", "돼지고기", "양파", "호박", "당근"], "notIngredients": []}
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,14 +34,16 @@ export default function Jnformation() {
         })
         .then(response => response.json())
         .then(json => {
-            console.log(json.result);
-            if (json) {
-                alert(json.result.ok);
-                // 필요한 경우 userId를 설정하는 함수 호출
-                // settingId(json.userId);
-            } else {
-                alert('실패하셨습니다.');
-            }
+            setfoodName(json.result.foodName); // 응답에서 음식 이름 설정
+
+            // 새로운 descriptions 배열 생성
+            const updatedDescriptions = json.result.ingredients.map((ingredient, index) => ({
+                id: index + 1, // 고유 ID 부여
+                name: ingredient
+            }));
+
+            setDescriptions(updatedDescriptions); // descriptions 상태 업데이트
+            console.log(descriptions)
         })
         .catch(error => {
             console.error('Error fetching data:', error);

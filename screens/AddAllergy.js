@@ -21,54 +21,76 @@ export default function AddAllergy() {
   let postName = []
   let i=0;
   const [selectedAllergies, setSelectedAllergies] = useState(new Set());
+
   useEffect(() => {
 
     const findNew = async () => {
       try {
-        const respond = await fetch(`http://${IP}/newAllergy?userId=${userId}`);
+        fetch(`http://${IP}/newAllergy?userId=${userId}`)
+          .then(response => response.json())
+          .then(data =>{
+            console.log(data);
+            const updatedBool = [...bool];
+            const updatedAllergyList = [...allergyList];
 
-        console.log(respond);
+            for (let i = 0; i < data.length; i++) {
+              updatedBool.push(false); // bool 상태를 수정할 때 새로운 배열을 사용합니다.
+              
+              updatedAllergyList.push({
+                id: i + 13,
+                name: data[i],
+                image: require('./assets/addAllergyImg/foodIcon.png'),
+                selectedImage: require('./assets/addAllergyImg/foodIconwhite.png')
+              });
+            }
+            console.log(updatedAllergyList);
+            console.log(updatedBool);
+            // 상태를 한 번에 업데이트합니다.
+            setBool(updatedBool);
+            setAllergyList(updatedAllergyList);
+          })
+          .then(async()=>{
+            try {
+              const respond = await fetch(`http://${IP}/myAllergy`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  userId: userId,
+                }),
+              });
+        
+              const result = await respond.json();
+              console.log(result);
+              setSelectedAllergies(prevSelected => {
+                const newSelected = new Set(prevSelected);
+                let i=0
+                allergyList.forEach(allergy => {
+                  console.log(allergy);
+                })
+                result.forEach(allergy => {
+                  const foundAllergy = allergyList.find(item => item.name === allergy);
+                  if (foundAllergy) {
+                    newSelected.add(foundAllergy.id);
+                  }
+                });
+                console.log(newSelected);
+                return newSelected;
+              });
+              
+            } catch (error) {
+              console.error(error);
+              alert('알러지 수정에 실패하였습니다.');
+            }
+          })
         
       } catch (error) {
         console.error(error);
         alert('알러지 수정에 실패하였습니다.');
       }
     }
-    
-    const fetchData = async () => {
-      try {
-        const respond = await fetch(`http://${IP}/myAllergy`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: userId,
-          }),
-        });
 
-        const result = await respond.json();
-        
-        setSelectedAllergies(prevSelected => {
-          const newSelected = new Set(prevSelected);
-          let i=0
-          result.forEach(allergy => {
-            const foundAllergy = allergyList.find(item => item.name === allergy);
-            if (foundAllergy) {
-              newSelected.add(foundAllergy.id);
-            }
-          });
-          
-          return newSelected;
-        });
-        
-      } catch (error) {
-        console.error(error);
-        alert('알러지 수정에 실패하였습니다.');
-      }
-    };
-
-    fetchData();
     findNew();
   }, []);
   const handlePress = (id) => { //선택된 알러지 색깔바꾸기

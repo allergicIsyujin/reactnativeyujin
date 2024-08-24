@@ -1,6 +1,5 @@
 import React, { useState,useContext } from 'react';
 import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -17,23 +16,18 @@ import MiniCamera from'../assets/img/MiniCamera.svg'
 export default function Result() {
   const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-  useEffect(() => {
-    fetch(`http://${IP}/login?userid=${encodeURIComponent(id)}&userpassword=${encodeURIComponent(password)}`)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-      })
-  }, []);
+  
   
   const route = useRoute(); //푸드아이디하고 푸드리스트들을 가져옴
   const data = route.params;
   const foodId = data.foodId;
   const {userId}=useContext(UserContext)
-  const {IP} = useContext(IPContext);
   alert(userId)//이거 지우셈
   const foodDetail = data.foodList.find(item => item.id === foodId); //푸드아이디에 해당하는 목록들을 foodDetail에 넣어줌(이름, 성분, 배경)
-  console.log(foodDetail.description)
+  console.log(foodDetail.image)
+  console.log(foodDetail.name)
   const navigation = useNavigation();
+  let a=0;
 
   const foodDescription = foodDetail.description;
   //foodDetail.image
@@ -47,15 +41,14 @@ export default function Result() {
           <Text style={styles.title}>음식 정보</Text>
       </View>
       <View style={styles.main}>
-        <Image style={styles.foodImg} source={{ uri: foodDetail.image }}></Image>
+      <Image source={{ uri: `data:image/png;base64,${foodDetail.image}` }} style={styles.foodImg} />
         <View style={styles.foodBox}>
             <Text style={styles.foodName}>{foodDetail.name}</Text>
             <View style={styles.foodData}>
             {foodDescription.map((food) => (
-                <Text key={food.id} style={styles.allergy}>{food.name}</Text>
+                <Text key={food.id} style={styles.allergy}>{foodDetail.description[a++]}</Text>
               ))}
 
-                
             </View>
         </View>
         <TouchableOpacity style={styles.button1} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect,useContext } from 'react';
 import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
-
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -18,27 +16,35 @@ export default function Record() {
   const route = useRoute();
   const { data } = route.params || {};
   const {userId}=useContext(UserContext)
-  const {IP} = useContext(IPContext);
   alert(userId)//이거 지우셈
   
   const [foodList, setfoodList] = useState([]);
-
+  let a=0;
   useEffect(() => {
-    if (data && data.length > 0) {
-        // 기존 foodList에 새로운 데이터를 추가
-        setfoodList(prevFoodList => [
-            ...prevFoodList,
-            ...data.map((item, index) => ({
-                id: (prevFoodList.length + index + 1).toString(),
-                name: data[0].foodName,
-                backgroundColor: data[0].backgroundColor ? "#51CE54" : "#FF4444", 
-                image: item.image,
-                description: item.description,
-            }))
-        ]);
-    }
-
-}, [data]);
+    // 서버에서 데이터를 가져오는 함수
+    fetch(`http://172.30.1.42:3000/foodRecord?userid=${encodeURIComponent(userId)}`)
+    .then(response => response.json())
+      .then(json => {
+        if (json && json.length > 0) {
+          // 기존 foodList에 새로운 데이터를 추가
+          setfoodList(prevFoodList => [
+              ...prevFoodList,
+              ...json.map((item, index) => ({
+                  id: (prevFoodList.length + index + 1).toString(),
+                  name: json[a].foodName,
+                  backgroundColor: json[a++].backgroundColor ? "#51CE54" : "#FF4444", 
+                  image: item.image,
+                  description: item.description,
+              }))
+          ]);
+          console.log(json[0].backgroundColor)
+        console.log(json[1].backgroundColor)
+      }})//navigation.navigate('MainPage')
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        alert('로그인에 실패하셨습니다.');
+      });
+  }, []); // 빈 의존성 배열을 사용하여 컴포넌트가 마운트될 때만 호출합니다
 //받은 데이터를 foodList에 추가후 DB에 저장, 저장 후 저장한 데이터들을 모두 가져와서 보여주기
 const goToResult = ((foodId)=>{
   navigation.navigate('Result',  {foodList, foodId : foodId})
