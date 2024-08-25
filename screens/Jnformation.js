@@ -22,7 +22,7 @@ export default function Jnformation() {
     const [backgroundColor, setbackgroundColor] = useState(1); // 배경색: 1은 먹을 수 있음, 0은 먹을 수 없음
     useEffect(() => {
         // 데이터 전송
-        fetch(`http://${IP}/base64`, {//{"ok": "O", "foodName": "짜장면", "ingredients": ["면", "춘장", "돼지고기", "양파", "호박", "당근"], "notIngredients": []}
+        fetch('http://172.30.1.42:3000/base64', {//{"ok": "O", "foodName": "짜장면", "ingredients": ["면", "춘장", "돼지고기", "양파", "호박", "당근"], "notIngredients": []}
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

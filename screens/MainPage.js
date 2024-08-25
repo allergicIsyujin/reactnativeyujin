@@ -17,6 +17,7 @@ import Camera from'../assets/img/Camera.svg'
 import Record from'../assets/img/Record.svg'
 
 export default function MainPage() {
+  const [showLoading, setShowLoading] = useState(true);
   const navigation = useNavigation();
   const [text, setText] = React.useState('');
   const {userId}=useContext(UserContext)
