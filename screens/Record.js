@@ -37,10 +37,10 @@ export default function Record() {
                   backgroundColor: json[a++].backgroundColor ? "#51CE54" : "#FF4444", 
                   image: item.image,
                   description: item.description,
+                  ingredient:item.ingredient
               }))
           ]);
-          console.log(json[0].backgroundColor)
-        console.log(json[1].backgroundColor)
+        // console.log(foodList[0].backgroundColor)//이쪽에서 에러뜸
       }})//navigation.navigate('MainPage')
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -215,4 +215,3 @@ selectText:{
   fontWeight:'500'
 }
 });
-
