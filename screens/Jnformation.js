@@ -11,6 +11,7 @@ import CameraG from '../assets/img/CameraG.svg';
 import Record from '../assets/img/Record.svg';
 import MiniCamera from '../assets/img/MiniCamera.svg';
 import RecordSave from '../assets/img/RecordSave.svg';
+import Loading from './roading.js'
 
 export default function Jnformation() {
     const navigation = useNavigation(); // 네비게이션 객체를 가져옴
@@ -23,6 +24,7 @@ export default function Jnformation() {
     const [backgroundColor, setBackgroundColor] = useState(1); // 배경색 상태 (1: 초록색-파란색, 0: 빨간색)
     const [descriptions, setDescriptions] = useState([]); // 재료 목록 상태
     const [notIngredients, setNotIngredients] = useState([]); // 제외 재료 목록 상태
+    const [loading, setloading] = useState(false);
 
     useEffect(() => {
         // 서버로 Base64 이미지를 전송
@@ -36,6 +38,7 @@ export default function Jnformation() {
                 food: photoBase64,
             }),
         })
+        .then(setloading(true))
         .then(response => response.json()) // 응답을 JSON 형태로 파싱
         .then(json => {
             setFoodName(json.result.foodName); // 음식 이름 설정
@@ -55,6 +58,9 @@ export default function Jnformation() {
 
             setDescriptions(updatedDescriptions); // 재료 목록 업데이트
             setNotIngredients(json.result.notIngredients || []); // 제외 재료 목록 업데이트, 기본값은 빈 배열
+        })
+        .then(()=>{
+            setloading(false)
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -87,7 +93,9 @@ export default function Jnformation() {
 
         navigation.navigate('Record', { data }); // Record 화면으로 데이터 전달 후 이동
     };
-
+    if (loading) {
+        return <Loading />;
+      }
     return (
         <View style={styles.container}>
             {/* 배경색을 조건에 따라 변경 */}
