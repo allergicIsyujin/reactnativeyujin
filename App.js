@@ -77,7 +77,7 @@ export const IPContext = createContext();
 
 export default function App() {
   const [userId, settingId] = useState(null)
-  const [IP, settingIP] = useState("172.30.1.42:3000");
+  const [IP, settingIP] = useState("10.150.151.116:3000");
   console.log(userId)
   return ( //기본은 home으로 지정후, 새로생기는 파일마다 이동가능하게 컴포넌트설정.
     <UserContext.Provider value={{ userId, settingId }}>

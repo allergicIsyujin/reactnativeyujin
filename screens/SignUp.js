@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
 import {IPContext} from '../App.js';
@@ -46,7 +46,7 @@ export default function SignUp() {
           }
     return (
       <View styles={signUpStyles.body}>
-      <View style={[signUpStyles.container, { marginTop: 200 }]}>
+      <View style={[signUpStyles.container]}>
         <View style={signUpStyles.main}>
           <TouchableOpacity style={signUpStyles.backBtn} onPress={() => navigation.goBack()} activeOpacity={0.9}>
             <Text style={{textDecorationLine: 'underline'}}>뒤로가기</Text>
