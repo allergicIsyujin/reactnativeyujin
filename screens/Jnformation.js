@@ -1,85 +1,100 @@
-import React, { useContext, useState,useEffect } from 'react';
-import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../App.js'; // 유저 정보를 관리하는 컨텍스트
+import { IPContext } from '../App.js'; // 서버 IP 주소를 관리하는 컨텍스트
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'; // React Native에서 사용하는 기본 컴포넌트
+import { LinearGradient } from 'expo-linear-gradient'; // 그라데이션 배경을 위한 컴포넌트
+import { useNavigation, useRoute } from '@react-navigation/native'; // 네비게이션을 위한 훅
 
-import Home from '../assets/img/Home.svg'
-import CheckSquare from'../assets/img/CheckSquare.svg'
-import CameraG from'../assets/img/CameraG.svg'
-import Record from'../assets/img/Record.svg'
-import MiniCamera from'../assets/img/MiniCamera.svg'
-import RecordSave from '../assets/img/RecordSave.svg'
+import Home from '../assets/img/Home.svg';
+import CheckSquare from '../assets/img/CheckSquare.svg';
+import CameraG from '../assets/img/CameraG.svg';
+import Record from '../assets/img/Record.svg';
+import MiniCamera from '../assets/img/MiniCamera.svg';
+import RecordSave from '../assets/img/RecordSave.svg';
 
 export default function Jnformation() {
-    const navigation = useNavigation();
-    const { userId } = useContext(UserContext);
-    const {IP} = useContext(IPContext);
-    const route = useRoute();
-    const { photoBase64 } = route.params || {}; // Base64 이미지 데이터 수신
-    const [foodName, setfoodName] = useState("치킨"); // 임시로 설정된 음식 이름
-    const [backgroundColor, setbackgroundColor] = useState(1); // 배경색: 1은 먹을 수 있음, 0은 먹을 수 없음
+    const navigation = useNavigation(); // 네비게이션 객체를 가져옴
+    const { userId } = useContext(UserContext); // 유저 ID를 가져옴
+    const { IP } = useContext(IPContext); // 서버 IP 주소를 가져옴
+    const route = useRoute(); // 현재 라우트 정보를 가져옴
+    const { photoBase64 } = route.params || {}; // 이전 화면에서 전달된 Base64 이미지 데이터를 가져옴
+
+    const [foodName, setFoodName] = useState("치킨"); // 음식 이름 상태 (기본값: 치킨)
+    const [backgroundColor, setBackgroundColor] = useState(1); // 배경색 상태 (1: 초록색-파란색, 0: 빨간색)
+    const [descriptions, setDescriptions] = useState([]); // 재료 목록 상태
+    const [notIngredients, setNotIngredients] = useState([]); // 제외 재료 목록 상태
+
     useEffect(() => {
-        // 데이터 전송
-        fetch(`http://${IP}/base64`, {//{"ok": "O", "foodName": "짜장면", "ingredients": ["면", "춘장", "돼지고기", "양파", "호박", "당근"], "notIngredients": []}
+        // 서버로 Base64 이미지를 전송
+        fetch(`http://${IP}/base64`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 userid: userId,
-                food: photoBase64
-            })
+                food: photoBase64,
+            }),
         })
-        .then(response => response.json())
+        .then(response => response.json()) // 응답을 JSON 형태로 파싱
         .then(json => {
-            setfoodName(json.result.foodName); // 응답에서 음식 이름 설정
+            setFoodName(json.result.foodName); // 음식 이름 설정
 
-            // 새로운 descriptions 배열 생성
+            // "ok" 값에 따라 배경색 설정
+            if (json.result.ok === "O") {
+                setBackgroundColor(1);
+            } else {
+                setBackgroundColor(0);
+            }
+
+            // 재료 목록과 제외 재료 목록 설정
             const updatedDescriptions = json.result.ingredients.map((ingredient, index) => ({
                 id: index + 1, // 고유 ID 부여
-                name: ingredient
+                name: ingredient,
             }));
 
-            setDescriptions(updatedDescriptions); // descriptions 상태 업데이트
-            console.log(descriptions)
+            setDescriptions(updatedDescriptions); // 재료 목록 업데이트
+            setNotIngredients(json.result.notIngredients || []); // 제외 재료 목록 업데이트, 기본값은 빈 배열
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            alert('로그인에 실패하셨습니다.');
+            alert('데이터를 가져오는 데 실패했습니다.'); // 오류 시 알림 표시
         });
-    }, [photoBase64]);
-    const save=()=>{
-        fetch(`http://${IP}/saveImage?userId=${encodeURIComponent(userId)}`)
-         .then(response => response.json())
-           .then(json => {
-                alert('sucess');
-             // 결과를 알림으로 표시
-           })//navigation.navigate('MainPage')
-           .catch(error => {
-             console.error('Error fetching data:', error);
-             alert('로그인에 실패하셨습니다.');
-           });
-       }
-    const [descriptions, setDescriptions] = useState([
-        { id: 1, name: "닭고기" },
-        { id: 2, name: "대두" },
-        { id: 3, name: "계란" },
-        { id: 4, name: "우유" }
-    ]);
+    }, [photoBase64, IP, userId]); // photoBase64, IP, userId가 변경될 때마다 이 효과 실행
 
-    const goToRecord = () => { 
+    const save = () => {
+        // 이미지를 서버에 저장 요청
+        fetch(`http://${IP}/saveImage?userId=${encodeURIComponent(userId)}`)
+            .then(response => response.json())
+            .then(json => {
+                alert('성공적으로 저장되었습니다.'); // 성공 시 알림 표시
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                alert('이미지 저장에 실패했습니다.'); // 오류 시 알림 표시
+            });
+    };
+
+    const goToRecord = () => {
         const data = [
-            { image: `data:image/png;base64,${photoBase64}`, description: descriptions, foodName: foodName, backgroundColor: backgroundColor }
+            {
+                image: `data:image/png;base64,${photoBase64}`,
+                description: descriptions,
+                foodName: foodName,
+                backgroundColor: backgroundColor,
+            },
         ];
-        
-        navigation.navigate('Record', { data });
+
+        navigation.navigate('Record', { data }); // Record 화면으로 데이터 전달 후 이동
     };
 
     return (
         <View style={styles.container}>
-            <LinearGradient colors={['#51CE54', '#0D7FFB']} style={styles.gradient}>
+            {/* 배경색을 조건에 따라 변경 */}
+            <LinearGradient 
+                colors={backgroundColor === 1 ? ['#51CE54', '#0D7FFB'] : ['#FF4444', '#FF4444']} 
+                style={styles.gradient}
+            >
                 <View>
                     <Image style={styles.headerImg} source={require('./assets/cameraImg/header-img.png')} />
                     <Text style={styles.title}>음식 정보</Text>
@@ -93,44 +108,69 @@ export default function Jnformation() {
                     <View style={styles.foodBox}>
                         <Text style={styles.foodName}>{foodName}</Text>
                         <View style={styles.foodData}>
+                            {/* 재료 목록 표시, notIngredients에 포함된 재료는 빨간색으로 표시 */}
                             {descriptions.map((item) => (
-                                <Text key={item.id} style={styles.allergy}>{item.name}</Text>
+                                <Text 
+                                    key={item.id} 
+                                    style={[
+                                        styles.allergy, 
+                                        notIngredients.includes(item.name) && { color: 'red' } // notIngredients가 포함된 경우 빨간색으로 표시
+                                    ]}
+                                >
+                                    {item.name}
+                                </Text>
                             ))}
                         </View>
                     </View>
                     <TouchableOpacity 
                         style={styles.button1} 
-                        onPress={() => navigation.goBack()}
+                        onPress={() => navigation.goBack()} // 이전 화면으로 이동
                         activeOpacity={0.9}
                     >
                         <MiniCamera />
                         <Text style={styles.buttonText}>다시 촬영하기</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button2} onPress={()=>save()}>
+                    <TouchableOpacity style={styles.button2} onPress={() => save()}>
                         <RecordSave />
                         <Text style={styles.buttonText}>기록 저장하기</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footer}>
-        <View style={styles.footerBar}>
-        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
-            <Home style={styles.icon} />
-            <Text style={styles.footerText}>홈</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
-            <CheckSquare style={styles.icon} />
-            <Text style={styles.footerText}>알러지 등록</Text>
-            </TouchableOpacity>
-          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
-            <CameraG style={styles.icon} />
-            <Text style={styles.selectText}>알러지 검색</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
-            <Record style={styles.icon} />
-            <Text style={styles.footerText}>기록</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+                    <View style={styles.footerBar}>
+                        <TouchableOpacity 
+                            style={styles.footerCenter} 
+                            onPress={() => navigation.navigate('MainPage')} 
+                            activeOpacity={0.9}
+                        >
+                            <Home style={styles.icon} />
+                            <Text style={styles.footerText}>홈</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.footerCenter} 
+                            onPress={() => navigation.navigate('MyAllergy')} 
+                            activeOpacity={0.9}
+                        >
+                            <CheckSquare style={styles.icon} />
+                            <Text style={styles.footerText}>알러지 등록</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.footerCenter} 
+                            onPress={() => navigation.navigate('Camera')} 
+                            activeOpacity={0.9}
+                        >
+                            <CameraG style={styles.icon} />
+                            <Text style={styles.selectText}>알러지 검색</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.footerCenter} 
+                            onPress={() => navigation.navigate('Record')} 
+                            activeOpacity={0.9}
+                        >
+                            <Record style={styles.icon} />
+                            <Text style={styles.footerText}>기록</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </LinearGradient>
         </View>
     );
