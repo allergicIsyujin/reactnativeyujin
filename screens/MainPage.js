@@ -1,9 +1,9 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 import { UserContext } from '../App.js';
 import {IPContext} from '../App.js';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Platform, Modal,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import {Image} from 'react-native';
 import LogoSvg from '../assets/img/logo.svg';
@@ -27,35 +27,68 @@ export default function MainPage() {
   const handlePress = () => {
     navigation.navigate('Search', { inputValue });
   };
-  async function openai_say(foodname){
-    try{
-      const respond = await fetch(`http://${IP}/openAI/say`,{
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id: userId,
-          food: foodname
-        })
-      })
-      if (!respond.ok) {
-        throw new Error(`HTTP error! Status: ${respond.status}`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const respond = await fetch(`http://${IP}/myAllergy`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: userId,
+          }),
+        });
+
+        const result = await respond.json();
+        const allergies = result.map((value, index) => {
+          const allergyImage = images.find(i => i.name === value)?.image || require('./assets/addAllergyImg/foodIconwhite.png');
+          return {
+            id: index,
+            selectedImage: allergyImage,
+            name: value,
+          };
+        });
+
+        setSelectedAllergies(allergies);
+      } catch (error) {
+        console.error(error);
       }
-      const textResponse = await respond.text(); // 응답 본문을 문자열로 읽기
-      console.log(textResponse); // 응답된 텍스트 출력
-      
-      return textResponse;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  
+    };
+
+    fetchData();
+  });
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const showModal = () => { //알러지 추가하기를 눌렀을때 검은화면보여주기
+    setIsModalVisible(true);
+  };
+
+  const hideModal = () => { //검은화면 숨기기
+    setIsModalVisible(true);
+  };
   return (
     
     <View style={{flex:1}}>
+      <Modal
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={hideModal}
+        animationType="fade"
+      >
+        <TouchableWithoutFeedback onPress={hideModal}>
+          <View style={styles.darkOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+              <Text style={styles.modalText}>음식정보</Text>
+              
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
       <StatusBar style="auto" />
       <LinearGradient style={styles.container} colors={['#51CE54', '#0D7FFB']}>
+      
       
           <ImageBackground style={styles.backgroundImg} source={require('../assets/img/background.png')} resizeMode="cover">
           </ImageBackground>
@@ -91,7 +124,7 @@ export default function MainPage() {
                       <TouchableOpacity
                         onPress={async() => {
                           result = await openai_say(text);
-                          alert(result);
+                          showModal();
                         }}
                       >
                         <SearchSvg/>
@@ -154,6 +187,27 @@ export default function MainPage() {
 
 
 const styles = StyleSheet.create({
+  darkOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    width: 300,
+    height: 350,
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    marginTop: 35,
+    marginBottom: 25,
+    fontSize: 22,
+    fontWeight: '700',
+  },
   container: {
     flex: 1,
     width:'100%',
