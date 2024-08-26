@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     position: 'absolute',
     top: 85,
-    left: 120,
+    left: 138,
     fontWeight: '700',
   },
   main: {
@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
     width: '98%',
     height: 400,
     marginTop: 20,
+    marginLeft:10,
   },
   scrollView: {
     width: '98%',
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
   save:{
     position: 'absolute',            // 상대적 위치 설정
       bottom: 100,                     // 하단으로부터 100px
-      left: 190,                        // 좌측으로부터 90px
+      left: 195,                        // 좌측으로부터 90px
       flexDirection: 'row',            // 가로 정렬
       justifyContent: 'space-around',  // 공간을 균등하게 분배
       alignItems: 'center',            // 중앙 정렬
@@ -411,9 +412,10 @@ const styles = StyleSheet.create({
     
   },
   newaddAlltergy: {
+    
     position: 'absolute',            // 상대적 위치 설정
       bottom: 100,                     // 하단으로부터 100px
-      left: 20,                        // 좌측으로부터 90px
+      left: 35,                        // 좌측으로부터 90px
       flexDirection: 'row',            // 가로 정렬
       justifyContent: 'space-around',  // 공간을 균등하게 분배
       alignItems: 'center',            // 중앙 정렬
@@ -421,7 +423,7 @@ const styles = StyleSheet.create({
       height: 50,                      // 높이 50px
       backgroundColor: '#0D7FFB',      // 배경색 파란색
       borderRadius: 10,                // 둥근 모서리 10px
-      paddingHorizontal: 10,  
+      paddingHorizontal: 10, 
   },
   newaddAlltergyText: {
     fontWeight:'600',

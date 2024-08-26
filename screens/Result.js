@@ -53,7 +53,7 @@ export default function Result() {
             <MiniCamera />
             <Text style={styles.buttonText}>요리 촬영하기</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button2}>
+          <TouchableOpacity style={styles.button2} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
             <SearchSvg />
             <Text style={styles.buttonText}>요리 검색하기</Text>
           </TouchableOpacity>

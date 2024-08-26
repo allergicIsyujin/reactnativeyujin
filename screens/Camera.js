@@ -81,7 +81,7 @@ export default function Camera() {
                     <Check />
                     <Text style={styles.buttonText}>사진 사용하기</Text>
                 </TouchableOpacity>
-
+                <View style={styles.white}></View>
                 <View style={styles.footer}>
         <View style={styles.footerBar}>
         <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
@@ -108,6 +108,12 @@ export default function Camera() {
 }
 
 const styles = StyleSheet.create({
+    white:{
+        width:'100%',
+        height:1000,
+        backgroundColor:'white',
+        zIndex:0
+    },
     container: {
         flex: 1,
         alignItems: 'center',
@@ -129,6 +135,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 10,
+        zIndex:1
     },
     button2: {
         position: 'absolute',
@@ -141,6 +148,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 10,
+        zIndex:1
     },
     image: {
         width: '100%',

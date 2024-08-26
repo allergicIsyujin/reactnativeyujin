@@ -1,9 +1,9 @@
-import React, { useContext,useState, useEffect } from 'react';
+import React, { useContext,useState } from 'react';
 import { UserContext } from '../App.js';
 import {IPContext} from '../App.js';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, TextInput, Platform, Modal,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Modal, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import {Image} from 'react-native';
 import LogoSvg from '../assets/img/logo.svg';
@@ -11,64 +11,69 @@ import ReTake from '../assets/img/Retake.svg';
 import SearchSvg from '../assets/img/find.svg'
 import { useNavigation } from '@react-navigation/native';
 
+import YesIcon from '../assets/img/yesIcon.svg'
+import Yes from '../assets/img/yes.svg'
+import NoIcon from '../assets/img/noIcon.svg'
+import X from '../assets/img/X.svg'
+import No from '../assets/img/no.svg'
 import HomeG from '../assets/img/HomeG.svg'
 import CheckSquare from'../assets/img/CheckSquare.svg'
 import Camera from'../assets/img/Camera.svg'
 import Record from'../assets/img/Record.svg'
 
 export default function MainPage() {
-  const [showLoading, setShowLoading] = useState(true);
   const navigation = useNavigation();
   const [text, setText] = React.useState('');
   const {userId}=useContext(UserContext)
   const {IP} = useContext(IPContext);
-  const [inputValue, setInputValue] = useState('');
-  // alert(userId)//이거 지우셈
-  const handlePress = () => {
-    navigation.navigate('Search', { inputValue });
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const respond = await fetch(`http://${IP}/myAllergy`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: userId,
-          }),
-        });
-
-        const result = await respond.json();
-        const allergies = result.map((value, index) => {
-          const allergyImage = images.find(i => i.name === value)?.image || require('./assets/addAllergyImg/foodIconwhite.png');
-          return {
-            id: index,
-            selectedImage: allergyImage,
-            name: value,
-          };
-        });
-
-        setSelectedAllergies(allergies);
-      } catch (error) {
-        console.error(error);
+  const [selectIcon, setselectIcon] = useState();
+  const [searchExplain, setsearchExplain] = useState();
+  const [description, setdescription] = useState();
+  const [notIngredients, setNotIngredients] = useState([]);
+ 
+  
+  
+  async function openai_say(foodname){
+    try{
+      const respond = await fetch(`http://${IP}/openAI/say`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: userId,
+          food: foodname
+        })
+      })
+      if (!respond.ok) {
+        throw new Error(`HTTP error! Status: ${respond.status}`);
       }
-    };
-
-    fetchData();
-  });
-  const [isModalVisible, setIsModalVisible] = useState(true);
+      const textResponse = await respond.json(); // 응답 본문을 문자열로 읽기
+      
+      setselectIcon(
+        textResponse.ok == 'O' ? true:false
+      )
+      setdescription(textResponse.ingredients); 
+      setsearchExplain(textResponse.description)
+      setNotIngredients(textResponse.notIngredients)
+      console.log(description[0])
+      return textResponse.ok;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => { //알러지 추가하기를 눌렀을때 검은화면보여주기
     setIsModalVisible(true);
   };
 
   const hideModal = () => { //검은화면 숨기기
-    setIsModalVisible(true);
+    setIsModalVisible(false);
   };
   return (
     
     <View style={{flex:1}}>
+      <StatusBar style="auto" />
       <Modal
         transparent={true}
         visible={isModalVisible}
@@ -79,16 +84,44 @@ export default function MainPage() {
           <View style={styles.darkOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modalContent}>
-              <Text style={styles.modalText}>음식정보</Text>
-              
+                <Text style={styles.modalText}>음식 정보</Text>
+                <TouchableWithoutFeedback onPress={hideModal}>
+                <X style={styles.xSvg}/>
+                </TouchableWithoutFeedback>
+                <View style={styles.noBox}>
+                  {selectIcon  ? 
+                  (
+                    <View>
+                  <YesIcon style = {styles.noIcon}/>
+                  <Yes />
+                  </View>) :
+                  (<View>
+                  <NoIcon style = {styles.noIcon}/>
+                  <No/>
+                  </View>
+                  )}
+                </View>
+                
+                <Text style={styles.textFoodName}>{text}</Text>
+                <View style={styles.descriptionBox}>
+                {description.map((item) => (
+                                <Text 
+                                    style={[
+                                        styles.textdescription, 
+                                        notIngredients.includes(item) && { color: 'red' } // notIngredients가 포함된 경우 빨간색으로 표시
+                                    ]}
+                                >
+                                    {item}
+                                </Text>
+                            ))}
+                  </View>
+                <Text style={styles.textFoodD}>{searchExplain}</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <StatusBar style="auto" />
       <LinearGradient style={styles.container} colors={['#51CE54', '#0D7FFB']}>
-      
       
           <ImageBackground style={styles.backgroundImg} source={require('../assets/img/background.png')} resizeMode="cover">
           </ImageBackground>
@@ -187,6 +220,26 @@ export default function MainPage() {
 
 
 const styles = StyleSheet.create({
+  descriptionBox:{
+    width:100,
+    flexDirection:'row',
+    marginLeft:25
+  },
+  textFoodName:{
+    marginLeft:25 ,
+    marginTop:10,
+    fontSize: 22,
+    fontWeight: '700',
+  },
+  textdescription:{
+    width:50,
+    marginBottom:10,
+    marginTop:10,
+  },
+  textFoodD:{
+    width:250,
+    marginLeft:25 
+  },
   darkOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -198,15 +251,30 @@ const styles = StyleSheet.create({
     width: 300,
     height: 350,
     display: 'flex',
-    flexDirection: 'column',
     borderRadius: 10,
-    alignItems: 'center',
   },
   modalText: {
+    textAlign:'center',
     marginTop: 35,
     marginBottom: 25,
     fontSize: 22,
     fontWeight: '700',
+  },
+  xSvg:{
+    position:'absolute',
+    top:20,
+    right:20
+  },
+  noBox:{
+    marginLeft:20,
+    width:'100%',
+    position:'relative'
+  },
+  noIcon:{
+    position:'absolute',
+    bottom:7,
+    left:30,
+    zIndex:10
   },
   container: {
     flex: 1,

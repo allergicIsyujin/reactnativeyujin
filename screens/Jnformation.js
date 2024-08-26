@@ -73,7 +73,8 @@ export default function Jnformation() {
         fetch(`http://${IP}/saveImage?userId=${encodeURIComponent(userId)}`)
             .then(response => response.json())
             .then(json => {
-                alert('성공적으로 저장되었습니다.'); // 성공 시 알림 표시
+                // alert('성공적으로 저장되었습니다.'); // 성공 시 알림 표시
+                navigation.navigate('Record');
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
