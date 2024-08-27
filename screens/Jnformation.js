@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../App.js'; // 유저 정보를 관리하는 컨텍스트
 import { IPContext } from '../App.js'; // 서버 IP 주소를 관리하는 컨텍스트
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'; // React Native에서 사용하는 기본 컴포넌트
+import { Text, View, StyleSheet, TouchableOpacity, Modal, Image, TouchableWithoutFeedback } from 'react-native'; // React Native에서 사용하는 기본 컴포넌트
 import { LinearGradient } from 'expo-linear-gradient'; // 그라데이션 배경을 위한 컴포넌트
 import { useNavigation, useRoute } from '@react-navigation/native'; // 네비게이션을 위한 훅
 
@@ -12,6 +12,8 @@ import Record from '../assets/img/Record.svg';
 import MiniCamera from '../assets/img/MiniCamera.svg';
 import RecordSave from '../assets/img/RecordSave.svg';
 import Loading from './roading.js'
+import BigYes from '../assets/img/bigYes.svg'
+import BigNo from '../assets/img/bigNo.svg'
 
 export default function Jnformation() {
     const navigation = useNavigation(); // 네비게이션 객체를 가져옴
@@ -26,6 +28,7 @@ export default function Jnformation() {
     const [notIngredients, setNotIngredients] = useState([]); // 제외 재료 목록 상태
     const [loading, setloading] = useState(false);
 
+    const [isModalVisible, setIsModalVisible] = useState(true);
     useEffect(() => {
         // 서버로 Base64 이미지를 전송
         fetch(`http://${IP}/base64`, {
@@ -94,12 +97,43 @@ export default function Jnformation() {
 
         navigation.navigate('Record', { data }); // Record 화면으로 데이터 전달 후 이동
     };
+    const showModal = () => { //알러지 추가하기를 눌렀을때 검은화면보여주기
+        setIsModalVisible(true);
+      };
+    
+      const hideModal = () => { //검은화면 숨기기
+        setIsModalVisible(false);
+      };
     if (loading) {
-        return <Loading />;
+        return <Loading  style={styles.view}/>;
       }
     return (
         <View style={styles.container}>
-            {/* 배경색을 조건에 따라 변경 */}
+            <Modal
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={showModal}
+        animationType="fade"
+      >
+        <TouchableWithoutFeedback onPress={hideModal}>
+          <View style={styles.darkOverlay}>
+            <TouchableWithoutFeedback>
+              <View style={[styles.modalContent, {backgroundColor: backgroundColor ? '#51CE54' : '#FF4444'}]}>
+                {backgroundColor ?
+                    (<View>
+                        <BigYes style={styles.Icon}/>
+                        <Text style={styles.modalText}>맛있게드세요</Text>
+                        </View>) :
+                        (<View>
+                            <BigNo style={styles.Icon}/>
+                            <Text style={styles.modalText}>먹으면 위험해요!</Text>
+                            </View>)
+                }
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
             <LinearGradient 
                 colors={backgroundColor === 1 ? ['#51CE54', '#0D7FFB'] : ['#FF4444', '#FF4444']} 
                 style={styles.gradient}
@@ -186,6 +220,35 @@ export default function Jnformation() {
 }
 
 const styles = StyleSheet.create({
+    view:{
+        zIndex:10
+    },
+    Icon:{
+        marginTop:25,
+        marginLeft:60
+    },
+    darkOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        
+        width: 300,
+        height: 200,
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: 10,
+        alignItems: 'center',
+      },
+      modalText: {
+        marginTop: 35,
+        marginBottom: 25,
+        fontSize: 25,
+        fontWeight: '700',
+        color:'white'
+      },
     container: {
         flex: 1,
         alignItems: 'center',
@@ -201,7 +264,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         position: 'absolute',
         top: 85,
-        left: 135,
+        left: 140,
         fontWeight: '700',
     },
     main: {

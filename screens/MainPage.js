@@ -28,7 +28,7 @@ export default function MainPage() {
   const {IP} = useContext(IPContext);
   const [selectIcon, setselectIcon] = useState();
   const [searchExplain, setsearchExplain] = useState();
-  const [description, setdescription] = useState();
+  const [description, setdescription] = useState([]);
   const [notIngredients, setNotIngredients] = useState([]);
  
   
@@ -70,11 +70,12 @@ export default function MainPage() {
   const hideModal = () => { //검은화면 숨기기
     setIsModalVisible(false);
   };
+ 
   return (
     
     <View style={{flex:1}}>
       <StatusBar style="auto" />
-      <Modal
+      {isModalVisible ? (<Modal
         transparent={true}
         visible={isModalVisible}
         onRequestClose={hideModal}
@@ -84,7 +85,7 @@ export default function MainPage() {
           <View style={styles.darkOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modalContent}>
-                <Text style={styles.modalText}>음식 정보</Text>
+                
                 <TouchableWithoutFeedback onPress={hideModal}>
                 <X style={styles.xSvg}/>
                 </TouchableWithoutFeedback>
@@ -92,11 +93,11 @@ export default function MainPage() {
                   {selectIcon  ? 
                   (
                     <View>
-                  <YesIcon style = {styles.noIcon}/>
+                 
                   <Yes />
                   </View>) :
                   (<View>
-                  <NoIcon style = {styles.noIcon}/>
+                  
                   <No/>
                   </View>
                   )}
@@ -120,7 +121,8 @@ export default function MainPage() {
             </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
-      </Modal>
+      </Modal>) : (null)}
+    
       <LinearGradient style={styles.container} colors={['#51CE54', '#0D7FFB']}>
       
           <ImageBackground style={styles.backgroundImg} source={require('../assets/img/background.png')} resizeMode="cover">
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   textdescription:{
-    width:50,
+    marginRight:10,
     marginBottom:10,
     marginTop:10,
   },
