@@ -41,7 +41,7 @@ export default function Jnformation() {
                 food: photoBase64,
             }),
         })
-        .then(setloading(true))
+        .then(setloading(false))
         .then(response => response.json()) // 응답을 JSON 형태로 파싱
         .then(json => {
             setFoodName(json.result.foodName); // 음식 이름 설정
@@ -120,13 +120,19 @@ export default function Jnformation() {
             <TouchableWithoutFeedback>
               <View style={[styles.modalContent, {backgroundColor: backgroundColor ? '#51CE54' : '#FF4444'}]}>
                 {backgroundColor ?
-                    (<View>
+                    (<View style={styles.IconBox}>
                         <BigYes style={styles.Icon}/>
-                        <Text style={styles.modalText}>맛있게드세요</Text>
+                        <Text style={styles.modalText}>드셔도 괜찮아요!</Text>
+                        <View><Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
+                        <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
+                            </View>
                         </View>) :
-                        (<View>
-                            <BigNo style={styles.Icon}/>
+                        (<View style={styles.IconBox}>
+                            <BigNo style={styles.Icon2}/>
                             <Text style={styles.modalText}>먹으면 위험해요!</Text>
+                            <View><Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
+                        <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
+                            </View>
                             </View>)
                 }
               </View>
@@ -220,12 +226,22 @@ export default function Jnformation() {
 }
 
 const styles = StyleSheet.create({
+    IconBox:{
+        flex:1,
+        alignItems:'center',
+    },
+    text:{
+        color:'white',
+        fontWeight:'700'
+    },
     view:{
         zIndex:10
     },
+    Icon2:{
+        marginTop:25,
+    },
     Icon:{
         marginTop:25,
-        marginLeft:60
     },
     darkOverlay: {
         ...StyleSheet.absoluteFillObject,
@@ -236,7 +252,7 @@ const styles = StyleSheet.create({
       modalContent: {
         
         width: 300,
-        height: 200,
+        height: 240,
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 10,
@@ -264,7 +280,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         position: 'absolute',
         top: 85,
-        left: 140,
+        left: 148,
         fontWeight: '700',
     },
     main: {
@@ -293,7 +309,7 @@ const styles = StyleSheet.create({
     },
     button1: {
         position: 'absolute',
-        left: 30,
+        left: 35,
         bottom: 110,
         width: 150,
         padding: 10,
@@ -315,7 +331,7 @@ const styles = StyleSheet.create({
     },
     button2: {
         position: 'absolute',
-        left: 190,
+        left: 195,
         bottom: 110,
         width: 150,
         padding: 10,

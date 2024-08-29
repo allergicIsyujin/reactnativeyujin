@@ -11,9 +11,7 @@ import ReTake from '../assets/img/Retake.svg';
 import SearchSvg from '../assets/img/find.svg'
 import { useNavigation } from '@react-navigation/native';
 
-import YesIcon from '../assets/img/yesIcon.svg'
 import Yes from '../assets/img/yes.svg'
-import NoIcon from '../assets/img/noIcon.svg'
 import X from '../assets/img/X.svg'
 import No from '../assets/img/no.svg'
 import HomeG from '../assets/img/HomeG.svg'
@@ -112,11 +110,14 @@ export default function MainPage() {
                                         notIngredients.includes(item) && { color: 'red' } // notIngredients가 포함된 경우 빨간색으로 표시
                                     ]}
                                 >
-                                    {item}
+                                    {item} + 이아아ㅏ
                                 </Text>
                             ))}
                   </View>
                 <Text style={styles.textFoodD}>{searchExplain}</Text>
+                <View><Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
+                        <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -222,6 +223,10 @@ export default function MainPage() {
 
 
 const styles = StyleSheet.create({
+  text:{
+    fontWeight:'700',
+    textAlign:'center'
+  },
   descriptionBox:{
     width:100,
     flexDirection:'row',
@@ -251,7 +256,7 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: '#fff',
     width: 300,
-    height: 350,
+    height: 380,
     display: 'flex',
     borderRadius: 10,
   },
@@ -268,6 +273,7 @@ const styles = StyleSheet.create({
     right:20
   },
   noBox:{
+    marginTop:50,
     marginLeft:20,
     width:'100%',
     position:'relative'
@@ -305,7 +311,6 @@ const styles = StyleSheet.create({
     top: 9,
     color: "#FFF",
     fontSize: 32,
-    fontStyle: 'normal',
     fontWeight: '500',
   },
   main:{
@@ -370,7 +375,6 @@ const styles = StyleSheet.create({
   },
   Cam_text:{
     color: '#FFF',
-    fontFamily: 'Inter',
     fontSize: 17.4,
     fontWeight: 'bold',
   },
@@ -378,7 +382,6 @@ const styles = StyleSheet.create({
     marginLeft: 9,
     marginTop: 2,
     color:'#FFF',
-    fontFamily: 'Inter',
     fontSize: 11.4,
     fontWeight: '400',
   },
@@ -386,9 +389,7 @@ const styles = StyleSheet.create({
     marginRight:-8,
     width:170,
     height:50,
-    fontFamily: 'Inter',
     fontSize: 17.986,
-    fontStyle: "normal",
     fontWeight: "bold",
   },
   // 여기서 부터 푸터

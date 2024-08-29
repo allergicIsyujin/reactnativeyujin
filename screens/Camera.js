@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     button1: {
         position: 'absolute',
-        left: 30,
+        left: 35,
         bottom: 110,
         width: 150,
         padding: 10,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     },
     button2: {
         position: 'absolute',
-        left: 190,
+        left: 195,
         bottom: 110,
         width: 150,
         padding: 10,
