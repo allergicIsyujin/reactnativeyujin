@@ -41,7 +41,7 @@ export default function Jnformation() {
                 food: photoBase64,
             }),
         })
-        .then(setloading(false))
+        .then(setloading(true))
         .then(response => response.json()) // 응답을 JSON 형태로 파싱
         .then(json => {
             setFoodName(json.result.foodName); // 음식 이름 설정

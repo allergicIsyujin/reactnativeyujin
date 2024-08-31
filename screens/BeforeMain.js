@@ -55,7 +55,6 @@ export default function BeforeMain() {
     },
     loginButtonText: {
       color: 'white',
-      fontFamily: 'SF Pro',
       fontSize: 20,
       fontWeight: '600',
       textAlign: 'center',
@@ -73,7 +72,6 @@ export default function BeforeMain() {
     },
     signupButtonText: {
       color: '#0D7FFB',
-      fontFamily: 'SF Pro',
       fontSize: 20,
       fontWeight: '600',
       textAlign: 'center',
