@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState, createContext } from 'react';
 
+import { UserContext, IPContext } from './contexts';
 import MyAllergy from './screens/MyAllergy';
 import AddAllergy from './screens/AddAllergy';
 import Record from './screens/Record';
@@ -19,12 +20,10 @@ import MainPage from './screens/MainPage'
 import Search from './screens/Search'
 
 const Stack = createStackNavigator();
-export const UserContext = createContext();
-export const IPContext = createContext();
 
 export default function App() {
   const [userId, settingId] = useState(null)
-  const [IP, settingIP] = useState("172.30.1.27:3000");
+  const [IP, settingIP] = useState("10.150.151.116:3000");
   console.log(userId)
   return ( //기본은 home으로 지정후, 새로생기는 파일마다 이동가능하게 컴포넌트설정.
     <UserContext.Provider value={{ userId, settingId }}>

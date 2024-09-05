@@ -1,6 +1,6 @@
 import React, { useContext,useState } from 'react';
-import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
+import { UserContext } from '../contexts.js';
+import {IPContext} from '../contexts.js';
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ImageBackground, Modal, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
@@ -10,6 +10,7 @@ import LogoSvg from '../assets/img/logo.svg';
 import ReTake from '../assets/img/Retake.svg';
 import SearchSvg from '../assets/img/find.svg'
 import { useNavigation } from '@react-navigation/native';
+import Loading from './roading.js'
 
 import Yes from '../assets/img/yes.svg'
 import X from '../assets/img/X.svg'
@@ -28,7 +29,7 @@ export default function MainPage() {
   const [searchExplain, setsearchExplain] = useState();
   const [description, setdescription] = useState([]);
   const [notIngredients, setNotIngredients] = useState([]);
- 
+ const [loading, setLoading] =useState(false);
   
   
   async function openai_say(foodname){
@@ -43,6 +44,7 @@ export default function MainPage() {
           food: foodname
         })
       })
+      .then(setLoading(true))
       if (!respond.ok) {
         throw new Error(`HTTP error! Status: ${respond.status}`);
       }
@@ -54,7 +56,8 @@ export default function MainPage() {
       setdescription(textResponse.ingredients); 
       setsearchExplain(textResponse.description)
       setNotIngredients(textResponse.notIngredients)
-      console.log(description[0])
+      console.log(textResponse.ingredients)
+      setLoading(false)
       return textResponse.ok;
     } catch (error) {
       console.error(error);
@@ -68,7 +71,9 @@ export default function MainPage() {
   const hideModal = () => { //검은화면 숨기기
     setIsModalVisible(false);
   };
- 
+  if (loading) {
+    return <Loading  style={styles.view}/>;
+  }
   return (
     
     <View style={{flex:1}}>
@@ -105,18 +110,20 @@ export default function MainPage() {
                 <View style={styles.descriptionBox}>
                 {description.map((item) => (
                                 <Text 
+                                key={item} 
                                     style={[
                                         styles.textdescription, 
                                         notIngredients.includes(item) && { color: 'red' } // notIngredients가 포함된 경우 빨간색으로 표시
                                     ]}
                                 >
-                                    {item} + 이아아ㅏ
+                                    {item}
                                 </Text>
                             ))}
                   </View>
                 <Text style={styles.textFoodD}>{searchExplain}</Text>
-                <View><Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
-                        <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
+                <View style={{position: 'absolute', bottom: 30,left: 15}}>
+                  <Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
+                  <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -225,11 +232,12 @@ export default function MainPage() {
 const styles = StyleSheet.create({
   text:{
     fontWeight:'700',
-    textAlign:'center'
+    textAlign:'center',
   },
   descriptionBox:{
-    width:100,
+    width:300,
     flexDirection:'row',
+    flexWrap:'wrap',
     marginLeft:25
   },
   textFoodName:{

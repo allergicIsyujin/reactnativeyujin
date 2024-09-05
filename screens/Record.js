@@ -1,6 +1,6 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
+import { UserContext } from '../contexts.js';
+import {IPContext} from '../contexts.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, TurboModuleRegistry } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +18,6 @@ export default function Record() {
   const { data } = route.params || {};
   const {userId}=useContext(UserContext)
   const {IP} = useContext(IPContext);
-  alert(userId)//이거 지우셈
   
   const [foodList, setfoodList] = useState([]);
   let a=0;
@@ -44,7 +43,7 @@ export default function Record() {
       }})//navigation.navigate('MainPage')
       .catch(error => {
         console.error('Error fetching data:', error);
-        alert('로그인에 실패하셨습니다.');
+        alert('기록 가져오기에 실패하였습니다.');
       });
   }, []); // 빈 의존성 배열을 사용하여 컴포넌트가 마운트될 때만 호출합니다
 //받은 데이터를 foodList에 추가후 DB에 저장, 저장 후 저장한 데이터들을 모두 가져와서 보여주기

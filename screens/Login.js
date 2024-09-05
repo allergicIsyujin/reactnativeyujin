@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
 import { useNavigation } from '@react-navigation/native';
-import { UserContext } from '../App.js'; // Context import
-import {IPContext} from '../App.js';
+import { UserContext } from '../contexts.js'; // Context import
+import {IPContext} from '../contexts.js';
 
 
 export default function Login() {
@@ -19,7 +19,6 @@ export default function Login() {
           console.log(json.userId);
           console.log(json.userPs);
           if(json.userId){
-            alert('환영합니다~');
             settingId(id) // 로그인 성공 시 userId 설정
             navigation.navigate('MainPage')
           }

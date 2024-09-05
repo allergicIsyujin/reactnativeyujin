@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
+import { UserContext } from '../contexts.js';
+import {IPContext} from '../contexts.js';
 
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -22,18 +22,30 @@ export default function MyAllergy({ navigation }) {
   const {IP} = useContext(IPContext);
   // const { selectedAllergies = [] } = route.params || {}; //selectedAllergies 에 선택한 알러지들을 저장
   const images = [ //기본알러지들의 아이디, 이름, 파란아이콘, 선택됐을때 아이콘(흰색)으로 구성해서 DB에 저장해야함.
+    // { name: '계란', image: require('./assets/addAllergyImg/friedEggswhite.png') },
+    // { name: '밀가루', image: require('./assets/addAllergyImg/loafBreadwhite.png') },
+    // { name: '우유', image: require('./assets/addAllergyImg/jarwhite.png') },
+    // { name: '닭고기', image: require('./assets/addAllergyImg/meat3white.png') },
+    // { name: '돼지고기', image: require('./assets/addAllergyImg/meat2white.png') },
+    // { name: '견과류', image: require('./assets/addAllergyImg/nutswhite.png') },
+    // { name: '새우', image: require('./assets/addAllergyImg/shrimpwhite.png') },
+    // { name: '해산물', image: require('./assets/addAllergyImg/fish1white.png') },
+    // { name: '생선', image: require('./assets/addAllergyImg/fishwhite.png') },
+    // { name: '포도', image: require('./assets/addAllergyImg/grapewhite.png') },
+    // { name: '바나나', image: require('./assets/addAllergyImg/bananawhite.png') },
+    // { name: '사과', image: require('./assets/addAllergyImg/applewhite.png') },
     { name: '계란', image: require('./assets/addAllergyImg/friedEggswhite.png') },
-    { name: '밀가루', image: require('./assets/addAllergyImg/loafBreadwhite.png') },
-    { name: '우유', image: require('./assets/addAllergyImg/jarwhite.png') },
+    { name: '밀', image: require('./assets/addAllergyImg/meal_white.png') },
+    { name: "우유", image: require('./assets/addAllergyImg/Milk_white.png') },
     { name: '닭고기', image: require('./assets/addAllergyImg/meat3white.png') },
-    { name: '돼지고기', image: require('./assets/addAllergyImg/meat2white.png') },
+    { name: '돼지고기', image: require('./assets/addAllergyImg/Pork_white.png') },
     { name: '견과류', image: require('./assets/addAllergyImg/nutswhite.png') },
     { name: '새우', image: require('./assets/addAllergyImg/shrimpwhite.png') },
-    { name: '해산물', image: require('./assets/addAllergyImg/fish1white.png') },
-    { name: '생선', image: require('./assets/addAllergyImg/fishwhite.png') },
-    { name: '포도', image: require('./assets/addAllergyImg/grapewhite.png') },
-    { name: '바나나', image: require('./assets/addAllergyImg/bananawhite.png') },
-    { name: '사과', image: require('./assets/addAllergyImg/applewhite.png') },
+    { name: '오징어', image: require('./assets/addAllergyImg/Squid_white.png') },
+    { name: '고등어', image: require('./assets/addAllergyImg/bluefish_white.png') },
+    { name: '게', image: require('./assets/addAllergyImg/Crab_white.png') },
+    { name: '조개', image: require('./assets/addAllergyImg/shel_white.png') },
+    { name: '복숭아', image: require('./assets/addAllergyImg/Peach_white.png') },
   ];
   useEffect(() => {
     const fetchData = async () => {

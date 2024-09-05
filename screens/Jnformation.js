@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../App.js'; // 유저 정보를 관리하는 컨텍스트
-import { IPContext } from '../App.js'; // 서버 IP 주소를 관리하는 컨텍스트
+import { UserContext } from '../contexts.js'; // 유저 정보를 관리하는 컨텍스트
+import { IPContext } from '../contexts.js'; // 서버 IP 주소를 관리하는 컨텍스트
 import { Text, View, StyleSheet, TouchableOpacity, Modal, Image, TouchableWithoutFeedback } from 'react-native'; // React Native에서 사용하는 기본 컴포넌트
 import { LinearGradient } from 'expo-linear-gradient'; // 그라데이션 배경을 위한 컴포넌트
 import { useNavigation, useRoute } from '@react-navigation/native'; // 네비게이션을 위한 훅
@@ -124,14 +124,14 @@ export default function Jnformation() {
                         <BigYes style={styles.Icon}/>
                         <Text style={styles.modalText}>드셔도 괜찮아요!</Text>
                         <View><Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
-                        <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
+                        <Text style={styles.text}>좀더 상세히 검색 후 안전하게 드세요</Text>
                             </View>
                         </View>) :
                         (<View style={styles.IconBox}>
                             <BigNo style={styles.Icon2}/>
                             <Text style={styles.modalText}>먹으면 위험해요!</Text>
                             <View><Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
-                        <Text style={styles.text}>좀더 상세하게 알고싶다면 음식점에 문의하세요</Text>
+                        <Text style={styles.text}>좀더 상세히 검색 후 안전하게 드세요</Text>
                             </View>
                             </View>)
                 }
@@ -232,7 +232,8 @@ const styles = StyleSheet.create({
     },
     text:{
         color:'white',
-        fontWeight:'700'
+        fontWeight:'700',
+        textAlign: 'center',
     },
     view:{
         zIndex:10
@@ -244,7 +245,8 @@ const styles = StyleSheet.create({
         marginTop:25,
     },
     darkOverlay: {
-        ...StyleSheet.absoluteFillObject,
+        width:'100%',
+        height:'100%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         justifyContent: 'center',
         alignItems: 'center',
