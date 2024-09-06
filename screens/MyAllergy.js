@@ -111,7 +111,7 @@ export default function MyAllergy({ navigation }) {
                 </View>
               ))
             ) : (
-              <Text style={styles.noAllergies}>알러지 정보가 없습니다.</Text>
+              <Text>알러지 정보가 없습니다.</Text>
             )}
             
 
@@ -155,11 +155,10 @@ const styles = StyleSheet.create({
       },
       gradient: {
         width:'100%',
-        height: 800,
+        height:'100%'
       },
       headerImg: {
         width:'100%',
-        marginBottom:20
       },
       logo :{
         display: 'flex',
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
         color: 'white',
         width: 230,
         justifyContent: 'space-around',
-        marginBottom: 20,
+        marginBottom: '3%',
       },
       h2Text:{
         color:'white',
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white', // 배경색 흰색
         borderTopRightRadius: 80, // 오른쪽 위 모서리 둥글게
         width:'100%', // 너비 360px
-        height:350,
+        height:'45%',
       },
       mainImg:{
         marginVertical: 10, // 위아래 여백 10px
@@ -187,14 +186,12 @@ const styles = StyleSheet.create({
       },
       mainText:{
         fontSize: 20, // 폰트 크기 20px
-        marginTop: 3, // 위쪽 여백 0px
-        marginRight: 10, // 오른쪽 여백 10px
-        marginLeft: 20, // 왼쪽 여백 10px
+        marginLeft: '5%', // 왼쪽 여백 10px
         fontWeight: '700'
       },
       pText : {
         marginVertical: 5, // 위아래 여백 10px
-        marginHorizontal: 20, // 좌우 여백 10px
+        marginLeft: '5%',
         marginBottom:15,
         fontSize: 14, // 폰트 크기 14px
         color: '#757575', // 텍스트 색상
@@ -204,7 +201,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 'auto', // 수평 중앙 정렬
         flexWrap: 'wrap', // 자식 요소들을 래핑
         flexDirection: 'row', // 자식 요소들을 수평으로 배치
-        marginHorizontal: 20,
+        marginLeft: '3%',
         flex: 1,
         
       },
@@ -212,8 +209,7 @@ const styles = StyleSheet.create({
         width:'100%',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        padding: 10,
-        
+        padding: '4%',
       },
       allergyName:{
         color:'white',
@@ -221,11 +217,11 @@ const styles = StyleSheet.create({
         fontWeight: '600',
       },
       myAllergy:{
-        marginRight: 10, // 오른쪽 여백 10px
-        marginBottom: 10, // 아래쪽 여백 10px
+        marginRight: '3%', // 오른쪽 여백 10px
+        marginBottom: '3%', // 아래쪽 여백 10px
         backgroundColor: '#FF4444', // 배경색 빨간색
-        width: 100, // 너비 100px
-        height: 90, // 높이 90px
+        width: '30%', // 너비 100px
+        height: '50%', // 높이 90px
         borderRadius: 10, // 모서리 둥글게 10px
         flexDirection: 'column', // 자식 요소를 수직으로 배치
         alignItems: 'center', // 자식 요소를 수평으로 중앙 정렬
@@ -250,39 +246,37 @@ const styles = StyleSheet.create({
         fontWeight:'700',
         color:'white'
       },
-  footer: {
-    shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자
-    shadowOffset: { width: 0, height: -6 }, // 수평, 수직 오프셋
-    shadowOpacity: 1, // 최대 불투명도
-    shadowRadius: 30, // 그림자 반경
-    elevation: 30, // 안드로이드에서 더 높은 그림자 높이
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    backgroundColor: 'white',
-    paddingVertical: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  footerBar: {
-    width: '98%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    height: 50,
-  },
-  footerCenter: {
-    alignItems: 'center',
-  },
-  icon: {
-    width: 25,
-    height: 25,
-  },
-  footerText:{
-    color:'#757575',
-    fontWeight:'500'
-  },
-  selectText:{
-    color:'#51CE54',
-    fontWeight:'500'
-  }
+      footer: {
+        shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자
+        shadowOffset: { width: 0, height: -6 }, // 수평, 수직 오프셋
+        shadowOpacity: 1, // 최대 불투명도
+        elevation: 10,
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'white',
+        paddingVertical: 10,
+      },
+      footerBar: {
+        width: '98%',
+        flex:1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding:'1%'
+      },
+      footerCenter: {
+        alignItems: 'center',
+      },
+      icon: {
+        width: 25,
+        height: 25,
+      },
+      footerText:{
+        color:'#757575',
+        fontWeight:'500'
+      },
+      selectText:{
+        color:'#51CE54',
+        fontWeight:'500'
+      }
 });

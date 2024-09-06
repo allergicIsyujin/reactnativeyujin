@@ -297,7 +297,8 @@ export default function AddAllergy() {
 
 const styles = StyleSheet.create({
   darkOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    width:'100%',
+    height:'100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
@@ -435,27 +436,26 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자
     shadowOffset: { width: 0, height: -6 }, // 수평, 수직 오프셋
     shadowOpacity: 1, // 최대 불투명도
-    shadowRadius: 30, // 그림자 반경
-    elevation: 30, // 안드로이드에서 더 높은 그림자 높이
+    elevation: 10,
     position: 'absolute',
     bottom: 0,
     width: '100%',
     backgroundColor: 'white',
     paddingVertical: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
-  
   footerBar: {
+    width: '98%',
+    flex:1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    padding:'1%'
   },
   footerCenter: {
     alignItems: 'center',
   },
   icon: {
-    marginBottom: 5,
+    width: 25,
+    height: 25,
   },
   footerText:{
     color:'#757575',

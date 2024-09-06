@@ -1,9 +1,9 @@
-import React, { useContext,useState } from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 import { UserContext } from '../contexts.js';
 import {IPContext} from '../contexts.js';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Modal, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, BackHandler, ImageBackground, Modal, TextInput, Platform,  TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import {Image} from 'react-native';
 import LogoSvg from '../assets/img/logo.svg';
@@ -31,7 +31,16 @@ export default function MainPage() {
   const [notIngredients, setNotIngredients] = useState([]);
  const [loading, setLoading] =useState(false);
   
-  
+ useEffect(() => {
+  const backAction = () => {
+    console.log(isActive)
+  };
+
+  const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+
+  // cleanup function
+  return () => backHandler.remove();
+}, [isActive]);
   async function openai_say(foodname){
     try{
       const respond = await fetch(`http://${IP}/openAI/say`,{
@@ -74,8 +83,15 @@ export default function MainPage() {
   if (loading) {
     return <Loading  style={styles.view}/>;
   }
+
+  const [isActive, setIsActive] = useState(false);
+  const handlePressOutside = () => {
+    setIsActive(false);  // 다른 곳을 눌렀을 때 비활성화
+    Keyboard.dismiss();   // 키보드 닫기
+  };
   return (
-    
+    <TouchableWithoutFeedback onPress={handlePressOutside}>
+                       
     <View style={{flex:1}}>
       <StatusBar style="auto" />
       {isModalVisible ? (<Modal
@@ -141,14 +157,13 @@ export default function MainPage() {
             <Text style={styles.logoText}>Allergic</Text>
           </View>
           
-          <View style={styles.main}>
+          <View style={[styles.main, {height : isActive ? '80%' :'45%'}]}>
               <View style={styles.mainBox}>
                   <Text style={styles.mainText}>식사를 하기전</Text>{/* class="text" style="display: inline-block; margin-bottom:10px"*/}
                   <Text style={styles.mainText}>알러지 식품을 체크해보세요!</Text>{/* class="text" */}
                   <Text style={styles.mainSmallText}>사진촬영이나 요리명을 검색해보세요.</Text>{/* class="small-text" */}
               </View>
-              <View style={styles.unBox}></View>
-              <View style={styles.section}>
+              <View style={[styles.section]}>
                   <TouchableOpacity
                     title="Go to Camera"
                     onPress={() => navigation.navigate("Camera")}
@@ -166,27 +181,24 @@ export default function MainPage() {
                   <View style={styles.find}>
                       <TouchableOpacity
                         onPress={async() => {
-                          result = await openai_say(text);
                           showModal();
+                          result = await openai_say(text);
                         }}
                       >
                         <SearchSvg/>
                       </TouchableOpacity>
-                      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                          <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-                            keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 100} // 필요에 따라 조정
-                          >
+                      
                             <View >
                                 <TextInput
                                 style={styles.input}
                                 placeholder="요리명 검색"
                                 onChangeText={setText}
                                 value={text}
+                                onFocus={() => setIsActive(true)}  
+                                onBlur={() => setIsActive(false)}
                               />
                             </View>
-                          </KeyboardAvoidingView>
-                        </TouchableWithoutFeedback>
+                           
                       
                       <TouchableOpacity
                         // 글자 삭제
@@ -224,7 +236,7 @@ export default function MainPage() {
       </View>
       </LinearGradient>
     </View>
-    
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -235,25 +247,26 @@ const styles = StyleSheet.create({
     textAlign:'center',
   },
   descriptionBox:{
-    width:300,
+    width: '80%',
     flexDirection:'row',
     flexWrap:'wrap',
-    marginLeft:25
+    marginLeft:'8%',
+    marginBottom:'20%'
   },
   textFoodName:{
-    marginLeft:25 ,
-    marginTop:10,
+    marginLeft:'10%' ,
+    marginTop:'5%',
     fontSize: 22,
     fontWeight: '700',
   },
   textdescription:{
-    marginRight:10,
-    marginBottom:10,
-    marginTop:10,
+    marginRight:'4%',
+    marginBottom:'4%',
+    marginTop:'4%',
   },
   textFoodD:{
-    width:250,
-    marginLeft:25 
+    width:'90%',
+    marginLeft:'10%' 
   },
   darkOverlay: {
     width:'100%',
@@ -264,8 +277,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: '#fff',
-    width: 300,
-    height: 380,
+    width: '80%',
     display: 'flex',
     borderRadius: 10,
   },
@@ -299,69 +311,63 @@ const styles = StyleSheet.create({
   },
   backgroundImg: {
     flex:1,
-    marginTop:30,
   },
   unMainBox:{
     width:'100%',
-    height:450,
-  },
-  unBox:{
-    height:30
+    height:'57%',
   },
   logo: {
     position:'absolute',
     flexDirection:'row',
-    left: 20,
-    top:300,
+    left: '5%',
+    top:'38%'
   },
   logoText:{
     position: 'relative',
-    left: 13,
-    top: 9,
+    left: '15%',
+    top: '5%',
     color: "#FFF",
     fontSize: 32,
     fontWeight: '500',
   },
   main:{
-    flex:1.3,
-    bottom:70,
+    flex:1,
     width:'100%',
-    height:350,
+    height:'45%',
     backgroundColor: "#FFF",
     position:'absolute',
+    bottom:'8%',
     borderTopRightRadius: 100,
   },
   mainText:{
-    marginBottom:4,
     fontSize: 24,
     fontWeight: 'bold',
   },
   mainBox:{
     flex:1,
-    top:45,
-    left:20,
+    width:'85%',
+    marginTop:'10%',
+    marginHorizontal:'auto'
   },
   mainSmallText:{
-    marginTop:4,
+    marginTop:'2%',
     fontSize: 16.2,
   },
   section:{
     flex:4,
-    top:45,
+    bottom:'-15%',
     position: 'relative',
     alignItems: 'center',
   },
   But:{
-    marginTop:30,
     height:60,
     width: 300,
     flexDirection:'row',
     borderRadius: 5.995,
-    paddingLeft:22,
+    paddingLeft:'5%',
     margin: 10,
     alignContent:'center',
     alignItems: 'center',
-    
     gap: 18.735,
     backgroundColor: '#0075FF',
   },
@@ -369,9 +375,9 @@ const styles = StyleSheet.create({
     height:60,
     width: 300,
     flexDirection:'row',
-    borderRadius: 5.995,
-    padding: (11.991, 22.482, 11.991, 21.482),
-    margin: 10,
+    borderRadius: 6,
+    paddingLeft:'5%',
+    margin: '3%',
     alignItems: 'center',
     gap: 18.735,
     borderWidth:2,
@@ -406,8 +412,7 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자
     shadowOffset: { width: 0, height: -6 }, // 수평, 수직 오프셋
     shadowOpacity: 1, // 최대 불투명도
-    shadowRadius: 30, // 그림자 반경
-    elevation: 30, // 안드로이드에서 더 높은 그림자 높이
+    elevation: 10,
     position: 'absolute',
     bottom: 0,
     width: '100%',
@@ -416,9 +421,10 @@ const styles = StyleSheet.create({
   },
   footerBar: {
     width: '98%',
+    flex:1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    height: 50,
+    padding:'1%'
   },
   footerCenter: {
     alignItems: 'center',
