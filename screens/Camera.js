@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
+import { UserContext } from '../contexts.js';
+import {IPContext} from '../contexts.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';

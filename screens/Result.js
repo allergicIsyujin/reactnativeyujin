@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../App.js';
+import { UserContext } from '../contexts.js';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';

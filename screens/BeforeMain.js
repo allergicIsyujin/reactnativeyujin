@@ -1,5 +1,5 @@
-import { UserContext } from '../App.js';
-import {IPContext} from '../App.js';
+import { UserContext } from '../contexts.js';
+import {IPContext} from '../contexts.js';
 import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';

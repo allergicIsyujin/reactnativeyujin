@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,TextInput } from 'react-native';
 import Action from '../assets/action.svg';
-import {IPContext} from '../App.js';
+import {IPContext} from '../contexts.js';
 import { useNavigation } from '@react-navigation/native';
 
 export default function SignUp() {
