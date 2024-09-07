@@ -142,7 +142,7 @@ export default function Jnformation() {
                             <View style={[styles.modalContent, { backgroundColor: backgroundColor ? '#51CE54' : '#FF4444' }]}>
                                 {backgroundColor ?
                                     (<View style={styles.IconBox}>
-                                        <BigYes style={styles.Icon} />
+                                        <BigYes />
                                         <Text style={styles.modalText}>드셔도 괜찮아요!</Text>
                                         <View>
                                             <Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
@@ -150,7 +150,7 @@ export default function Jnformation() {
                                         </View>
                                     </View>) :
                                     (<View style={styles.IconBox}>
-                                        <BigNo style={styles.Icon2} />
+                                        <BigNo  />
                                         <Text style={styles.modalText}>먹으면 위험해요!</Text>
                                         <View>
                                             <Text style={styles.text}>많이 사용되는 레시피를 기준으로 만들었습니다</Text>
@@ -194,6 +194,7 @@ export default function Jnformation() {
                             ))}
                         </View>
                     </View>
+                    <View style={styles.buttonBox}>
                     <TouchableOpacity
                         style={styles.button1}
                         onPress={() => navigation.goBack()} // 이전 화면으로 이동
@@ -206,40 +207,26 @@ export default function Jnformation() {
                         <RecordSave />
                         <Text style={styles.buttonText}>기록 저장하기</Text>
                     </TouchableOpacity>
+                    </View>
+                    
                 </View>
                 <View style={styles.footer}>
                     <View style={styles.footerBar}>
-                        <TouchableOpacity
-                            style={styles.footerCenter}
-                            onPress={() => navigation.navigate('MainPage')}
-                            activeOpacity={0.9}
-                        >
+                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MainPage')} activeOpacity={0.9}>
                             <Home style={styles.icon} />
                             <Text style={styles.footerText}>홈</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.footerCenter}
-                            onPress={() => navigation.navigate('MyAllergy')}
-                            activeOpacity={0.9}
-                        >
+                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('MyAllergy')} activeOpacity={0.9}>
                             <CheckSquare style={styles.icon} />
                             <Text style={styles.footerText}>알러지 등록</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.footerCenter}
-                            onPress={() => navigation.navigate('Camera')}
-                            activeOpacity={0.9}
-                        >
+                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
                             <CameraG style={styles.icon} />
-                            <Text style={styles.footerText}>촬영하기</Text>
+                            <Text style={styles.selectText}>알러지 검색</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.footerCenter}
-                            onPress={() => goToRecord()}
-                            activeOpacity={0.9}
-                        >
+                        <TouchableOpacity style={styles.footerCenter} onPress={() => navigation.navigate('Record')} activeOpacity={0.9}>
                             <Record style={styles.icon} />
-                            <Text style={styles.footerText}>기록보기</Text>
+                            <Text style={styles.footerText}>기록</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -249,6 +236,45 @@ export default function Jnformation() {
 }
 
 const styles = StyleSheet.create({
+    darkOverlay: {
+        width:'100%',
+        height:'100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        backgroundColor: '#fff',
+        width:'78%',
+        height: '30%',
+        flexDirection: 'column',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent:'center',
+        alignContent:'center'
+      },
+      modalText: {
+        color:'white',
+        marginTop: '11%',
+        marginBottom: '8%',
+        fontSize: 22,
+        fontWeight: '700',
+      },
+      text:{
+        color:'white',
+        textAlign:'center'
+      },
+      title: {
+        color: '#FFFFFF',
+        fontSize: 25,
+        position: 'absolute',
+        top: '60%',
+        left: '38.5%',
+        fontWeight: '700',
+      },
+      IconBox:{
+        alignItems:'center',
+      },
     container: {
         flex: 1,
     },
@@ -259,79 +285,110 @@ const styles = StyleSheet.create({
         width: '100%',
         resizeMode: 'cover',
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#fff',
-        textAlign: 'center',
-        marginVertical: 10,
-    },
     main: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor:'white',
+        borderTopRightRadius:80
     },
     foodImg: {
         width: '100%',
-        height: 300,
+        height: 400,
         resizeMode: 'cover',
-        borderRadius: 10,
-        marginVertical: 20,
+        borderTopRightRadius:80
     },
     foodBox: {
-        alignItems: 'center',
-        marginBottom: 20,
+        zIndex:10,
+        width:'88%',
     },
     foodName: {
-        fontSize: 20,
+        marginTop: '3%',
+        fontSize: 22,
         fontWeight: 'bold',
-        color: '#fff',
+        color: 'black',
+        marginBottom: '3%',
     },
     foodData: {
-        marginTop: 10,
+        marginTop: '3%',
     },
     allergy: {
         fontSize: 16,
-        color: '#fff',
+        color: 'black',
+    },
+    buttonBox:{
+        zIndex:10,
+        flex:1,
+        flexDirection:'row',
+        justifyContent:'space-around',
+        width:'90%',
+        marginLeft:'5%',
+        position:'absolute',
+        bottom:'15%',
+    
     },
     button1: {
+        width: 150,
+        padding: 10,
+        backgroundColor: '#0075FF',
+        justifyContent: 'space-around',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 5,
-        marginVertical: 5,
+        borderRadius: 10,
+        zIndex: 1
     },
     button2: {
+        width: 150,
+        padding: 10,
+        backgroundColor: '#0075FF',
+        justifyContent: 'space-around',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: 10,
-        borderRadius: 5,
-        marginVertical: 5,
+        borderRadius: 10,
+        zIndex: 1
+    },
+    image: {
+        width: '100%',
+        height: '50%',
+        marginTop: '10%',
     },
     buttonText: {
-        marginLeft: 10,
+        color: 'white',
+        fontWeight: '600',
         fontSize: 16,
     },
     footer: {
+        shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자
+        shadowOffset: { width: 0, height: -6 }, // 수평, 수직 오프셋
+        shadowOpacity: 1, // 최대 불투명도
+        shadowRadius: 30, // 그림자 반경
+        elevation: 30, // 안드로이드에서 더 높은 그림자 높이
         position: 'absolute',
         bottom: 0,
         width: '100%',
+        backgroundColor: 'white',
+        paddingVertical: 10,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     footerBar: {
+        width: '98%',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        padding: 10,
-        backgroundColor: '#fff',
+        height: 50,
     },
     footerCenter: {
         alignItems: 'center',
     },
     icon: {
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
     },
     footerText: {
-        fontSize: 12,
+        color: '#757575',
+        fontWeight: '500',
+    },
+    selectText: {
+        color: '#51CE54',
+        fontWeight: '500',
     },
 });

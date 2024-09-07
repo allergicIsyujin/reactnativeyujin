@@ -127,6 +127,7 @@ export default function Camera() {
 }
 
 const styles = StyleSheet.create({
+    
     white: {
         width: '100%',
         height: '100%',
