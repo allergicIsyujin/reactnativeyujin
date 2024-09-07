@@ -85,6 +85,7 @@ export default function Camera() {
                         style={styles.image}
                     />
                 )}
+                <View style={styles.buttonBox}>
                 <TouchableOpacity
                     style={styles.button1}
                     onPress={() => navigation.goBack()}
@@ -97,6 +98,8 @@ export default function Camera() {
                     <Check />
                     <Text style={styles.buttonText}>사진 사용하기</Text>
                 </TouchableOpacity>
+                </View>
+                
                 <View style={styles.white}></View>
                 <View style={styles.footer}>
                     <View style={styles.footerBar}>
@@ -126,7 +129,7 @@ export default function Camera() {
 const styles = StyleSheet.create({
     white: {
         width: '100%',
-        height: 1000,
+        height: '100%',
         backgroundColor: 'white',
         zIndex: 0
     },
@@ -140,10 +143,18 @@ const styles = StyleSheet.create({
         height: '100%',
         overflow: 'hidden',
     },
+    buttonBox:{
+        zIndex:10,
+        flex:1,
+        flexDirection:'row',
+        justifyContent:'space-around',
+        width:'90%',
+        marginLeft:'5%',
+        position:'absolute',
+        bottom:'15%',
+    
+    },
     button1: {
-        position: 'absolute',
-        left: 35,
-        bottom: 110,
         width: 150,
         padding: 10,
         backgroundColor: '#0075FF',
@@ -154,9 +165,6 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     button2: {
-        position: 'absolute',
-        left: 195,
-        bottom: 110,
         width: 150,
         padding: 10,
         backgroundColor: '#0075FF',
@@ -168,21 +176,13 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 400,
-        marginTop: 40,
+        height: '50%',
+        marginTop: '10%',
     },
     buttonText: {
         color: 'white',
         fontWeight: '600',
         fontSize: 16,
-    },
-    title: {
-        color: '#FFFFFF',
-        fontSize: 25,
-        position: 'absolute',
-        top: 85,
-        left: 175,
-        fontWeight: '700',
     },
     footer: {
         shadowColor: 'rgba(0, 0, 255, 1)', // 진한 파란색 그림자

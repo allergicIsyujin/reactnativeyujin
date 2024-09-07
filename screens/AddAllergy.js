@@ -261,7 +261,8 @@ export default function AddAllergy() {
               ))}
             </ScrollView>
           </View>
-          <TouchableOpacity style={styles.newaddAlltergy} onPress={showModal}>
+              <View style={styles.buttonBox}>
+              <TouchableOpacity style={styles.newaddAlltergy} onPress={showModal}>
             <PlusSquare />
             <Text style={styles.newaddAlltergyText}>알러지 추가하기</Text>
           </TouchableOpacity>
@@ -269,6 +270,8 @@ export default function AddAllergy() {
             <CheckSave />
             <Text style={styles.newaddAlltergyText}>저장하기</Text>
           </TouchableOpacity>
+              </View>
+          
         </View>
         <View style={styles.footer}>
         <View style={styles.footerBar}>
@@ -305,24 +308,24 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: '#fff',
-    width: 300,
-    height: 200,
+    width: '78%',
+    height: '28%',
     display: 'flex',
     flexDirection: 'column',
     borderRadius: 10,
     alignItems: 'center',
   },
   modalText: {
-    marginTop: 35,
-    marginBottom: 25,
+    marginTop: '11%',
+    marginBottom: '8%',
     fontSize: 16,
     fontWeight: '700',
   },
   LastAddButton: {
     backgroundColor: '#0075FF',
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 70,
+    paddingVertical: '3%',
+    paddingHorizontal: '20%',
   },
   addText: {
     color: 'white',
@@ -332,8 +335,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     width: '80%',
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    paddingHorizontal: '5%',
+    marginBottom: '8%',
     borderRadius: 10,
   },
   container: {
@@ -350,25 +353,25 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 25,
     position: 'absolute',
-    top: 85,
-    left: 138,
+    top: '60%',
+    left: '35%',
     fontWeight: '700',
   },
   main: {
     backgroundColor: 'white',
     width: '100%',
     borderTopRightRadius: 80,
-    height: 650,
+    height: '82%',
   },
   mainbox: {
-    marginHorizontal: 20,
-    marginTop: 10,
+    marginHorizontal: '5%',
+    marginTop: '5%',
   },
   allergyList: {
     width: '98%',
-    height: 400,
-    marginTop: 20,
-    marginLeft:10,
+    height: '62%',
+    marginTop: '5%',
+    marginLeft:'2.5%',
   },
   scrollView: {
     width: '98%',
@@ -383,18 +386,23 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
-    marginRight: 10,
+    marginBottom: '3%',
+    marginRight: '3%',
     borderWidth: 3,
     borderColor: '#0075FF',
   },
   allergyListBoxContent: {
     alignItems: 'center',
   },
-  save:{
-    position: 'absolute',            // 상대적 위치 설정
-      bottom: 100,                     // 하단으로부터 100px
-      left: 195,                        // 좌측으로부터 90px
+  buttonBox:{
+    flex:1,
+    flexDirection:'row',
+    marginTop:'10%',
+    width:'90%',
+    marginLeft:'5%',
+    justifyContent:'space-around'
+  },
+  save:{         // 좌측으로부터 90px
       flexDirection: 'row',            // 가로 정렬
       justifyContent: 'space-around',  // 공간을 균등하게 분배
       alignItems: 'center',            // 중앙 정렬
@@ -403,20 +411,15 @@ const styles = StyleSheet.create({
       backgroundColor: '#0D7FFB',      // 배경색 파란색
       borderRadius: 10,                // 둥근 모서리 10px
       paddingHorizontal: 10,
-      flex:1,
     justifyContent:'center',
+    
   },
   name: {
-    marginTop: 10,
     fontSize: 16,
     fontWeight: '600',
     
   },
-  newaddAlltergy: {
-    
-    position: 'absolute',            // 상대적 위치 설정
-      bottom: 100,                     // 하단으로부터 100px
-      left: 35,                        // 좌측으로부터 90px
+  newaddAlltergy: {                  // 좌측으로부터 90px
       flexDirection: 'row',            // 가로 정렬
       justifyContent: 'space-around',  // 공간을 균등하게 분배
       alignItems: 'center',            // 중앙 정렬

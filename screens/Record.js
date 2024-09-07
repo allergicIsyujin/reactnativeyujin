@@ -124,24 +124,25 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 25,
     position: 'absolute',
-    top: 85,
-    left: 175,
+    top: '65%',
+    left: '45%',
     fontWeight: '700',
   },
   main: {
     backgroundColor: 'white',
     width: '100%',
     borderTopRightRadius: 80,
-    height: 650,
+    height: '80%',
   },
   mainbox: {
-    marginHorizontal: 20,
-    marginTop: 10,
+    width:'90%',
+    marginLeft:'8%',
+    marginTop: '5%',
   },
   RecordList: {
     width: '100%',
-    height: 510,
-    marginTop: 20,
+    height: '85%',
+    marginTop: '5%',
   },
   scrollView: {
     width: '100%',
@@ -155,8 +156,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 15,
-    marginRight: 20,
+    marginBottom: '5%',
+    marginRight: '5%',
   },
   View:{
     width:80,
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10, // 좌우에 10 dp 패딩 적용
   },
   RecordBoxText:{
-    marginTop:40,
+    marginTop:'30%',
     marginBottom:8,
     color:'white',
     fontSize:22,

@@ -257,7 +257,6 @@ const styles = StyleSheet.create({
     },
     headerImg: {
         width: '100%',
-        height: 150,
         resizeMode: 'cover',
     },
     title: {
@@ -272,7 +271,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     foodImg: {
-        width: 300,
+        width: '100%',
         height: 300,
         resizeMode: 'cover',
         borderRadius: 10,
@@ -334,38 +333,5 @@ const styles = StyleSheet.create({
     },
     footerText: {
         fontSize: 12,
-    },
-    darkOverlay: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        padding: 20,
-        borderRadius: 10,
-        width: '80%',
-        alignItems: 'center',
-    },
-    IconBox: {
-        alignItems: 'center',
-    },
-    Icon: {
-        width: 60,
-        height: 60,
-    },
-    Icon2: {
-        width: 60,
-        height: 60,
-    },
-    modalText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#fff',
-        marginVertical: 10,
-    },
-    text: {
-        fontSize: 16,
-        color: '#fff',
     },
 });

@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
         height:'45%',
       },
       mainImg:{
-        marginVertical: 10, // 위아래 여백 10px
-        marginHorizontal: 20, // 좌우 여백 20px
+        marginVertical: '3%', // 위아래 여백 10px
+        marginHorizontal: '5%', // 좌우 여백 20px
       },
       mainText:{
         fontSize: 20, // 폰트 크기 20px
@@ -190,9 +190,9 @@ const styles = StyleSheet.create({
         fontWeight: '700'
       },
       pText : {
-        marginVertical: 5, // 위아래 여백 10px
+        marginVertical: '2%', // 위아래 여백 10px
         marginLeft: '5%',
-        marginBottom:15,
+        marginBottom:'3%',
         fontSize: 14, // 폰트 크기 14px
         color: '#757575', // 텍스트 색상
       },
