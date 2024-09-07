@@ -38,15 +38,15 @@ export default function Result() {
           <Text style={styles.title}>음식 정보</Text>
         </View>
         <View style={styles.main}>
-          <Image source={{ uri: `data:image/png;base64,${image}` }} style={styles.foodImg} />
+          <Image source={{ uri: image }} style={styles.foodImg} />
           <View style={styles.foodBox}>
             <Text style={styles.foodName}>{name}</Text>
             <ScrollView contentContainerStyle={styles.foodData}>
-              {description.map((desc, index) => (
+              {description?description.map((desc, index) => (
                 <Text key={index} style={getDescriptionStyle(desc)}>
                   {desc}
                 </Text>
-              ))}
+              )):<Text>재료없음</Text>}
             </ScrollView>
           </View>
           <TouchableOpacity style={styles.button1} onPress={() => navigation.navigate('Camera')} activeOpacity={0.9}>
